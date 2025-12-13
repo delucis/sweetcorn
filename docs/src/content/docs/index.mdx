@@ -32,11 +32,65 @@ import testPattern from '../../assets/PM5544_MK10.png';
 import ditherpunkDark from '../../assets/surma-ditherpunk-dark.png';
 import ditherpunkLight from '../../assets/surma-ditherpunk-light.png';
 
-<div style="--min: 240px; --gap: 1rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr)); place-items: center;">
-	<Image src={moon} alt="The Moon" width={240} />
-	<Image src={contrastGradient} alt="Contrast Gradient" width={240} />
-	<Image src={demo} alt="Antifascist Demonstration" width={240} />
-	<Image src={testPattern} alt="Test Pattern" width={240} />
-	<Image src={ditherpunkDark} alt="Ditherpunk Dark" width={240} />
-	<Image src={ditherpunkLight} alt="Ditherpunk Light" width={240} />
-</div>
+<style set:html={`img { image-rendering: pixelated; }`}></style>
+
+export const Figure = ({ children, caption }) => (
+	<figure style="display: flex; flex-direction: column;">
+		{children}
+		<figcaption style="font-size: small;">{caption}</figcaption>
+	</figure>
+);
+
+export const AlgorithmTest = ({ src, alt, width = 200 }) => (
+	<>
+		<h2>{alt}</h2>
+		<div
+			class="not-content"
+			style={`--min: ${width}px; --gap: 0.5rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr)); place-items: center;`}
+		>
+			<Figure caption="Original Image">
+				<Image src={src} alt="" width={width} />
+			</Figure>
+			<Figure caption="bayer-16">
+				<Image src={src} alt="" width={width} dither="bayer-16" />
+			</Figure>
+			<Figure caption="bayer-8">
+				<Image src={src} alt="" width={width} dither="bayer-8" />
+			</Figure>
+			<Figure caption="bayer-4">
+				<Image src={src} alt="" width={width} dither="bayer-4" />
+			</Figure>
+			<Figure caption="bayer-2">
+				<Image src={src} alt="" width={width} dither="bayer-2" />
+			</Figure>
+			<Figure caption="simple">
+				<Image src={src} alt="" width={width} dither="simple" />
+			</Figure>
+			<Figure caption="floyd-steinberg">
+				<Image src={src} alt="" width={width} dither="floyd-steinberg" />
+			</Figure>
+			<Figure caption="jarvis-judice-ninke">
+				<Image src={src} alt="" width={width} dither="jarvis-judice-ninke" />
+			</Figure>
+			<Figure caption="stucki">
+				<Image src={src} alt="" width={width} dither="stucki" />
+			</Figure>
+			<Figure caption="atkinson">
+				<Image src={src} alt="" width={width} dither="atkinson" />
+			</Figure>
+			<Figure caption="threshold">
+				<Image src={src} alt="" width={width} dither="threshold" />
+			</Figure>
+			<Figure caption="white-noise">
+				<Image src={src} alt="" width={width} dither="white-noise" />
+			</Figure>
+		</div>
+	</>
+);
+
+<AlgorithmTest src={moon} alt="The Moon" />
+<AlgorithmTest src={contrastGradient} alt="Contrast Gradient" />
+<AlgorithmTest src={demo} alt="Antifascist Demonstration" />
+<AlgorithmTest src={testPattern} alt="Test Pattern" />
+<AlgorithmTest src={ditherpunkDark} alt="Ditherpunk Dark" />
+<AlgorithmTest src={ditherpunkLight} alt="Ditherpunk Light" />
