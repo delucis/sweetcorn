@@ -15,7 +15,11 @@ type BaseServiceTransform = {
 	position?: string;
 };
 
-type Algorithm = 'bayer-2' | 'bayer-4' | 'bayer-8' | 'bayer-16' | 'white-noise' | 'threshold';
+type Algorithm =
+	| keyof typeof thresholdMaps
+	| keyof typeof diffusionKernels
+	| 'white-noise'
+	| 'threshold';
 
 let sharp: typeof import('sharp');
 async function loadSharp() {
