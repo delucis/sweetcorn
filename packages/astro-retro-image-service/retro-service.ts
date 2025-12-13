@@ -112,13 +112,13 @@ export default {
 		} else if (algorithm === 'white-noise') {
 			// White noise dithering (pretty rough and ugly)
 			for (let index = 0; index < rawPixels.data.length; index++) {
-				const pixelValue = rawPixels.data[index];
+				const pixelValue = rawPixels.data[index]!;
 				rawPixels.data[index] = pixelValue / 255 < Math.random() ? 0 : 255;
 			}
 		} else if (algorithm === 'threshold') {
 			// Basic quantization
 			for (let index = 0; index < rawPixels.data.length; index++) {
-				const pixelValue = rawPixels.data[index];
+				const pixelValue = rawPixels.data[index]!;
 				rawPixels.data[index] = pixelValue < 128 ? 0 : 255;
 			}
 		}
@@ -180,12 +180,12 @@ function applyDiffusionKernel(
 	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
 	kernel: number[][]
 ) {
-	const kernelWidth = kernel[0].length;
+	const kernelWidth = kernel[0]!.length;
 	const kernelHeight = kernel.length;
 	const kernelRadius = Math.floor((kernelWidth - 1) / 2);
 
 	for (let index = 0; index < rawPixels.data.length; index++) {
-		const original = rawPixels.data[index];
+		const original = rawPixels.data[index]!;
 		const quantized = original < 128 ? 0 : 255;
 		rawPixels.data[index] = quantized;
 		const error = original - quantized;
@@ -197,7 +197,7 @@ function applyDiffusionKernel(
 
 		for (let diffX = 0; diffX < kernelWidth; diffX++) {
 			for (let diffY = 0; diffY < kernelHeight; diffY++) {
-				const diffusionWeight = kernel[diffY][diffX];
+				const diffusionWeight = kernel[diffY]![diffX]!;
 				if (diffusionWeight === 0) continue;
 
 				const offsetX = diffX - kernelRadius;
@@ -210,24 +210,15 @@ function applyDiffusionKernel(
 				if (neighborX >= 0 && neighborY >= 0 && neighborX < width && neighborY < height) {
 					const neighborIndex = neighborY * width + neighborX;
 					rawPixels.data[neighborIndex] = clamp(
-						rawPixels.data[neighborIndex] + error * diffusionWeight,
-						0,
-						255
+						rawPixels.data[neighborIndex]! + error * diffusionWeight
 					);
 				}
-
-				// const x = (index % width) + diffX;
-				// const y = Math.floor(index / width) + diffY;
-				// if (x >= 0 && x < width && y >= 0 && y < height) {
-				// 	const neighborIndex = y * width + x;
-				// 	rawPixels.data[neighborIndex] += error * kernel[diffY][diffX];
-				// }
 			}
 		}
 	}
 }
 
-function clamp(value: number, min: number, max: number) {
+function clamp(value: number, min = 0, max = 255) {
 	return Math.min(Math.max(value, min), max);
 }
 
@@ -262,12 +253,12 @@ function applyThresholdMap(
 	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
 	thresholdMap: number[][]
 ) {
-	const mapWidth = thresholdMap[0].length;
+	const mapWidth = thresholdMap[0]!.length;
 	const mapHeight = thresholdMap.length;
 	for (let index = 0; index < rawPixels.data.length; index++) {
-		const pixelValue = rawPixels.data[index];
+		const pixelValue = rawPixels.data[index]!;
 		const [x, y] = [index % rawPixels.info.width, Math.floor(index / rawPixels.info.width)];
-		const threshold = thresholdMap[y % mapHeight][x % mapWidth];
+		const threshold = thresholdMap[y % mapHeight]![x % mapWidth]!;
 		rawPixels.data[index] = pixelValue < threshold ? 0 : 255;
 	}
 }
