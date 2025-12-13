@@ -20,6 +20,23 @@ import { PackageManagers } from 'starlight-package-managers';
 
    <PackageManagers type="exec" pkg="astro" args="add astro-retro-image-service" />
 
-2. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to see the integration in action.
+2. Apply dithering to your images using the `dither` prop on the `<Image>` component from `astro:assets`.
+
+   ```astro /dither=.+/
+   ---
+   import { Image } from 'astro:assets';
+   import exampleImage from './example.jpg';
+   ---
+
+   <Image
+      src={exampleImage}
+      alt="Example Image"
+      dither="bayer-8"
+   />
+   ```
+
+   See the [“Algorithms”](/algorithms/) page for examples of all algorithms supported in the `dither` prop.
+
+3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to see the integration in action.
 
 </Steps>
