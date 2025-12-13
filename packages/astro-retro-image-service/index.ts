@@ -1,8 +1,9 @@
 import type { AstroIntegration } from 'astro';
+import type { DitheringAlgorithm } from './types';
 
 export default function astroRetroImageService({
 	defaultDitherAlgorithm,
-}: { defaultDitherAlgorithm?: string } = {}) {
+}: { defaultDitherAlgorithm?: DitheringAlgorithm } = {}) {
 	return {
 		name: 'astro-retro-image-service',
 		hooks: {
