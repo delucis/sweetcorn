@@ -1,0 +1,33 @@
+{
+  "name": "astro-retro-image-service",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "A custom Astro image service to generate retro dithered images",
+  "author": "delucis",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./retro-service": "./retro-service.ts"
+  },
+  "devDependencies": {
+    "astro": "^5.16.5",
+    "sharp": "^0.34.5"
+  },
+  "peerDependencies": {
+    "astro": "^5.0.0",
+    "sharp": ">=0.33.0"
+  },
+  "engines": {
+    "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/delucis/astro-retro-image-service",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delucis/astro-retro-image-service.git",
+    "directory": "packages/astro-retro-image-service"
+  },
+  "bugs": "https://github.com/delucis/astro-retro-image-service/issues"
+}

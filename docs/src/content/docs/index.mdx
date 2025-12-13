@@ -1,0 +1,42 @@
+---
+title: astro-retro-image-service
+description: A custom Astro image service to generate retro dithered images
+head:
+  - tag: title
+    content: astro-retro-image-service
+  - tag: style
+    content: |
+      .hero-html {
+        --size: 12rem;
+        font-size: var(--size);
+        justify-content: center;
+        line-height: var(--size);
+      }
+template: splash
+editUrl: false
+hero:
+  tagline: A custom Astro image service to generate retro dithered images
+  image:
+    html: '👾'
+  actions:
+    - text: Get Started
+      link: /getting-started/
+      icon: right-arrow
+---
+
+import { Image } from 'astro:assets';
+import moon from '../../assets/9237597241_7bb0b5ff7b_o.jpg';
+import contrastGradient from '../../assets/CSF.UHD.png';
+import demo from '../../assets/Manifestazione_antifascista.jpg';
+import testPattern from '../../assets/PM5544_MK10.png';
+import ditherpunkDark from '../../assets/surma-ditherpunk-dark.png';
+import ditherpunkLight from '../../assets/surma-ditherpunk-light.png';
+
+<div style="--min: 240px; --gap: 1rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr)); place-items: center;">
+	<Image src={moon} alt="The Moon" width={240} />
+	<Image src={contrastGradient} alt="Contrast Gradient" width={240} />
+	<Image src={demo} alt="Antifascist Demonstration" width={240} />
+	<Image src={testPattern} alt="Test Pattern" width={240} />
+	<Image src={ditherpunkDark} alt="Ditherpunk Dark" width={240} />
+	<Image src={ditherpunkLight} alt="Ditherpunk Light" width={240} />
+</div>
