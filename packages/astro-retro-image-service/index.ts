@@ -1,6 +1,8 @@
 import type { AstroIntegration } from 'astro';
 
-export default function astroRetroImageService() {
+export default function astroRetroImageService({
+	defaultDitherAlgorithm,
+}: { defaultDitherAlgorithm?: string } = {}) {
 	return {
 		name: 'astro-retro-image-service',
 		hooks: {
@@ -9,7 +11,7 @@ export default function astroRetroImageService() {
 					image: {
 						service: {
 							entrypoint: 'astro-retro-image-service/retro-service',
-							config: { algorithm: 'simple' },
+							config: { defaultDitherAlgorithm },
 						},
 					},
 				});

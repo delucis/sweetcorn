@@ -44,7 +44,32 @@ const fitMap: Record<ImageFit, keyof FitEnum> = {
 export default {
 	...service,
 
+	async getURL(options, imageConfig) {
+		let url = await service.getURL(options, imageConfig);
+		if (options.dither) {
+			url += `&dither=${options.dither}`;
+		}
+		return url;
+	},
+
+	async validateOptions(options, imageConfig) {
+		const validatedOptions = await service.validateOptions!(options, imageConfig);
+		if (imageConfig.service.config.defaultDitherAlgorithm) {
+			validatedOptions.dither ??= imageConfig.service.config.defaultDitherAlgorithm;
+		}
+		return validatedOptions;
+	},
+
+	async parseURL(url, imageConfig) {
+		const parsed = (await service.parseURL(url, imageConfig))!;
+		parsed.dither ??= url.searchParams.get('dither');
+		return parsed;
+	},
+
 	async transform(inputBuffer, transformOptions, config) {
+		const algorithm: Algorithm = transformOptions.dither;
+		if (!algorithm) return service.transform(inputBuffer, transformOptions, config);
+
 		if (!sharp) sharp = await loadSharp();
 		const transform: BaseServiceTransform = transformOptions as BaseServiceTransform;
 
@@ -69,8 +94,6 @@ export default {
 
 		// Get raw pixel data for this image.
 		const rawPixels = await image.raw().toBuffer({ resolveWithObject: true });
-
-		const algorithm: Algorithm = config.service.config.algorithm ?? 'bayer-8';
 
 		const thresholdMap: number[][] | undefined =
 			thresholdMaps[algorithm as keyof typeof thresholdMaps];
@@ -112,7 +135,7 @@ export default {
 			format: info.format as ImageOutputFormat,
 		};
 	},
-} satisfies LocalImageService<SharpImageServiceConfig & { algorithm?: Algorithm }>;
+} satisfies LocalImageService<SharpImageServiceConfig & { defaultDitherAlgorithm?: Algorithm }>;
 
 /**
  * Resizes the image using the same logic as Astro's built-in image service.
