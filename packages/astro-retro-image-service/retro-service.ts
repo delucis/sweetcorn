@@ -65,8 +65,7 @@ export default {
 
 		// Convert image to greyscale before dithering.
 		// We use gamma to linearize the colorspace, and improve the perceptual quality.
-		image.gamma().greyscale();
-		// image.greyscale();
+		image.gamma(2.2, 1).greyscale();
 
 		// Get raw pixel data for this image.
 		const rawPixels = await image.raw().toBuffer({ resolveWithObject: true });
