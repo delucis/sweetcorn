@@ -2,6 +2,7 @@ import type { ImageOutputFormat, LocalImageService } from 'astro';
 import service, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
 import type { FitEnum } from 'sharp';
+import diffusionKernels from './diffusion-kernels';
 import thresholdMaps from './threshold-maps.json';
 
 type ImageFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down' | (string & {});
@@ -221,32 +222,6 @@ function applyDiffusionKernel(
 function clamp(value: number, min = 0, max = 255) {
 	return Math.min(Math.max(value, min), max);
 }
-
-const diffusionKernels = {
-	'simple-diffusion': [
-		[0, 0.5],
-		[0.5, 0],
-	],
-	'floyd-steinberg': [
-		[0, 0, 7 / 16],
-		[3 / 16, 5 / 16, 1 / 16],
-	],
-	'jarvis-judice-ninke': [
-		[0, 0, 0, 7 / 48, 5 / 48],
-		[3 / 48, 5 / 48, 7 / 48, 5 / 48, 3 / 48],
-		[1 / 48, 3 / 48, 5 / 48, 3 / 48, 1 / 48],
-	],
-	stucki: [
-		[0, 0, 0, 8 / 42, 4 / 42],
-		[2 / 42, 4 / 42, 8 / 42, 4 / 42, 2 / 42],
-		[1 / 42, 2 / 42, 4 / 42, 2 / 42, 1 / 42],
-	],
-	atkinson: [
-		[0, 0, 1 / 8, 1 / 8],
-		[1 / 8, 1 / 8, 1 / 8, 0],
-		[0, 1 / 8, 0, 0],
-	],
-};
 
 /** Applies a threshold map to the raw pixel data for ordered dithering. */
 function applyThresholdMap(
