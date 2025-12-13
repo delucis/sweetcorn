@@ -4,6 +4,7 @@ import { AstroError } from 'astro/errors';
 import type { FitEnum } from 'sharp';
 import diffusionKernels from './diffusion-kernels';
 import thresholdMaps from './threshold-maps.json';
+import type { Algorithm } from './types';
 
 type ImageFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down' | (string & {});
 type BaseServiceTransform = {
@@ -15,12 +16,6 @@ type BaseServiceTransform = {
 	fit?: ImageFit;
 	position?: string;
 };
-
-type Algorithm =
-	| keyof typeof thresholdMaps
-	| keyof typeof diffusionKernels
-	| 'white-noise'
-	| 'threshold';
 
 let sharp: typeof import('sharp');
 async function loadSharp() {
