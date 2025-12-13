@@ -4,7 +4,7 @@ import { AstroError } from 'astro/errors';
 import type { FitEnum } from 'sharp';
 import diffusionKernels from './diffusion-kernels';
 import thresholdMaps from './threshold-maps.json';
-import type { Algorithm } from './types';
+import type { DitheringAlgorithm } from './types';
 
 type ImageFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down' | (string & {});
 type BaseServiceTransform = {
@@ -68,7 +68,7 @@ export default {
 	},
 
 	async transform(inputBuffer, transformOptions, config) {
-		const algorithm: Algorithm = transformOptions.dither;
+		const algorithm: DitheringAlgorithm = transformOptions.dither;
 		if (!algorithm) return service.transform(inputBuffer, transformOptions, config);
 
 		if (!sharp) sharp = await loadSharp();
@@ -136,7 +136,7 @@ export default {
 			format: info.format as ImageOutputFormat,
 		};
 	},
-} satisfies LocalImageService<SharpImageServiceConfig & { defaultDitherAlgorithm?: Algorithm }>;
+} satisfies LocalImageService<SharpImageServiceConfig & { defaultDitherAlgorithm?: DitheringAlgorithm }>;
 
 /**
  * Resizes the image using the same logic as Astro's built-in image service.
