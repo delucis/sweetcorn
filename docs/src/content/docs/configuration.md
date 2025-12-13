@@ -21,7 +21,7 @@ The Astro Retro Image Service supports the following configuration options.
 
 ## `defaultDitherAlgorithm`
 
-**Type:** `"bayer-2" | "bayer-4" | "bayer-8" | "bayer-16" | "simple" | "floyd-steinberg" | "jarvis-judice-ninke" | "stucki" | "atkinson" | "threshold" | "white-noise"`
+**Type:** `"bayer-2" | "bayer-4" | "bayer-8" | "bayer-16" | "simple-diffusion" | "floyd-steinberg" | "jarvis-judice-ninke" | "stucki" | "atkinson" | "threshold" | "white-noise"`
 
 By default, no dithering algorithm is applied to images unless a `dither` option is passed to the `<Image>` component or `getImage()` call.
 

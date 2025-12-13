@@ -227,7 +227,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 const diffusionKernels = {
-	simple: [
+	'simple-diffusion': [
 		[0, 0.5],
 		[0.5, 0],
 	],
