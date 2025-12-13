@@ -4,7 +4,7 @@ export default function astroRetroImageService() {
 	return {
 		name: 'astro-retro-image-service',
 		hooks: {
-			'astro:config:setup'({ updateConfig }) {
+			'astro:config:setup'({ updateConfig, addWatchFile }) {
 				updateConfig({
 					image: {
 						service: {
@@ -13,6 +13,9 @@ export default function astroRetroImageService() {
 						},
 					},
 				});
+
+				const serviceUrl = new URL('./retro-service.ts', import.meta.url);
+				addWatchFile(serviceUrl);
 			},
 		},
 	} satisfies AstroIntegration;
