@@ -35,7 +35,7 @@ import { PackageManagers } from 'starlight-package-managers';
    <Image dither="bayer-8" src={exampleImage} alt="Example" />
    ```
 
-   See the [“Algorithms”](/algorithms/) page for examples of all algorithms supported in the `dither` prop.
+   See the [“Algorithms”](/sweetcorn/algorithms/) page for examples of all algorithms supported in the `dither` prop.
 
 3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to see the integration in action.
 
@@ -45,7 +45,7 @@ import { PackageManagers } from 'starlight-package-managers';
 
 ### `<Image>` and `<Picture>`
 
-When using Astro’s [`<Image>`](https://docs.astro.build/en/guides/images/#image-) and [`<Picture>`](https://docs.astro.build/en/guides/images/#picture-) components, set the `dither` prop to one of the [supported algorithms](/algorithms/) to apply dithering to the image:
+When using Astro’s [`<Image>`](https://docs.astro.build/en/guides/images/#image-) and [`<Picture>`](https://docs.astro.build/en/guides/images/#picture-) components, set the `dither` prop to one of the [supported algorithms](/sweetcorn/algorithms/) to apply dithering to the image:
 
 ```astro /dither="[^"]+"/
 ---
@@ -60,7 +60,7 @@ import example from './example.jpg';
 
 ### `getImage()`
 
-When generating images programmatically with Astro’s [`getImage()`](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) API, set `dither` to one of the [supported algorithms](/algorithms/) in the options object:
+When generating images programmatically with Astro’s [`getImage()`](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) API, set `dither` to one of the [supported algorithms](/sweetcorn/algorithms/) in the options object:
 
 ```js {6}
 import { getImage } from 'astro:assets';

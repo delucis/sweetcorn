@@ -20,7 +20,7 @@ hero:
     html: '🌽'
   actions:
     - text: Get Started
-      link: /getting-started/
+      link: /sweetcorn/getting-started/
       icon: right-arrow
 ---
 
@@ -44,75 +44,3 @@ Sweetcorn is a collection of JavaScript image dithering tools for [Sharp](https:
 		An Astro integration makes it easy to dither images in your Astro websites with sweetcorn.
 	</Card>
 </CardGrid>
-
-import { Image } from 'astro:assets';
-import moon from '../../assets/9237597241_7bb0b5ff7b_o.jpg';
-import contrastGradient from '../../assets/CSF.UHD.png';
-import demo from '../../assets/Manifestazione_antifascista.jpg';
-import testPattern from '../../assets/PM5544_MK10.png';
-import ditherpunkDark from '../../assets/surma-ditherpunk-dark.png';
-import ditherpunkLight from '../../assets/surma-ditherpunk-light.png';
-
-import diffusionKernels from '../../../../packages/sweetcorn/src/diffusion-kernels.ts';
-import thresholdMaps from '../../../../packages/sweetcorn/src/threshold-maps.json';
-
-<style set:html={`img { image-rendering: pixelated; }`}></style>
-
-export const Figure = ({ children, caption }) => (
-	<figure style="display: flex; flex-direction: column;">
-		{children}
-		<figcaption style="font-size: small;">{caption}</figcaption>
-	</figure>
-);
-
-export const AlgorithmTest = ({ src, alt, width = 200 }) => (
-	<>
-		<h2>{alt}</h2>
-		<div
-			class="not-content"
-			style={`--min: ${width}px; --gap: 0.5rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));`}
-		>
-			<Figure caption="Original Image">
-				<Image src={src} alt="" width={width} />
-			</Figure>
-    </div>
-
-    <h3>Threshold maps</h3>
-    <div
-    		class="not-content"
-    		style={`--min: ${width}px; --gap: 0.5rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));`}
-    	>
-      {Object.keys(thresholdMaps).map((algorithm) => (
-        <Figure caption={algorithm}>
-          <Image src={src} alt="" width={width} dither={algorithm} />
-        </Figure>
-      ))}
-    		<Figure caption="white-noise">
-    			<Image src={src} alt="" width={width} dither="white-noise" />
-    		</Figure>
-    		<Figure caption="threshold">
-    			<Image src={src} alt="" width={width} dither="threshold" />
-    		</Figure>
-      </div>
-
-      <h3>Error diffusion</h3>
-      <div
-    		class="not-content"
-    		style={`--min: ${width}px; --gap: 0.5rem; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));`}
-      >
-        {Object.keys(diffusionKernels).map((algorithm) => (
-          <Figure caption={`${algorithm} (cost: ${diffusionKernels[algorithm][0].length * diffusionKernels[algorithm].length})`}>
-            <Image src={src} alt="" width={width} dither={algorithm} />
-          </Figure>
-        ))}
-    	</div>
-    </>
-
-);
-
-<AlgorithmTest src={moon} alt="The Moon" />
-<AlgorithmTest src={contrastGradient} alt="Contrast Gradient" />
-<AlgorithmTest src={demo} alt="Antifascist Demonstration" />
-<AlgorithmTest src={testPattern} alt="Test Pattern" />
-<AlgorithmTest src={ditherpunkDark} alt="Ditherpunk Dark" />
-<AlgorithmTest src={ditherpunkLight} alt="Ditherpunk Light" />
