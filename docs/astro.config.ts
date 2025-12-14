@@ -19,6 +19,7 @@ export default defineConfig({
 					items: ['getting-started', 'algorithms'],
 				},
 				{ label: 'Frameworks', items: ['frameworks/astro'] },
+				'acknowledgements',
 			],
 			social: [
 				{
