@@ -11,5 +11,9 @@
 		"build": "pnpm -r build",
 		"predev": "pnpm %core build",
 		"dev": "pnpm %docs dev"
+	},
+	"dependencies": {
+		"@changesets/changelog-github": "^0.5.2",
+		"@changesets/cli": "^2.29.8"
 	}
 }
