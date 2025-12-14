@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"description": "A custom Astro image service to generate dithered images using Sweetcorn",
 	"keywords": [
-		"withastro",
+		"astro-integration",
 		"image",
 		"dither",
 		"sharp",
