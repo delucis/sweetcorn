@@ -1,17 +1,15 @@
 {
-  "name": "sweetcorn-monorepo",
-  "version": "0.0.1",
-  "license": "MIT",
-  "type": "module",
-  "engines": {
-    "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
-  },
-  "packageManager": "pnpm@9.6.0",
-  "private": true,
-  "homepage": "https://github.com/delucis/sweetcorn",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/delucis/sweetcorn.git"
-  },
-  "bugs": "https://github.com/delucis/sweetcorn/issues"
+	"name": "sweetcorn-monorepo",
+	"version": "0.0.1",
+	"license": "MIT",
+	"type": "module",
+	"packageManager": "pnpm@9.6.0",
+	"private": true,
+	"scripts": {
+		"%docs": "pnpm --filter sweetcorn-docs",
+		"%core": "pnpm --filter sweetcorn",
+		"build": "pnpm -r build",
+		"predev": "pnpm %core build",
+		"dev": "pnpm %docs dev"
+	}
 }

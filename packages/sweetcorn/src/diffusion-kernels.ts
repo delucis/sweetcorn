@@ -1,3 +1,5 @@
+type Kernel = number[][];
+
 /**
  * Error diffusion dither kernels.
  *
@@ -31,51 +33,51 @@ export default {
 	'simple-diffusion': [
 		[0, 0.5],
 		[0.5, 0],
-	],
+	] as Kernel,
 	'floyd-steinberg': [
 		[0, 0, 7 / 16],
 		[3 / 16, 5 / 16, 1 / 16],
-	],
+	] as Kernel,
 	'false-floyd-steinberg': [
 		[0, 3 / 8],
 		[3 / 8, 2 / 8],
-	],
+	] as Kernel,
 	'jarvis-judice-ninke': [
 		[0, 0, 0, 7 / 48, 5 / 48],
 		[3 / 48, 5 / 48, 7 / 48, 5 / 48, 3 / 48],
 		[1 / 48, 3 / 48, 5 / 48, 3 / 48, 1 / 48],
-	],
+	] as Kernel,
 	stucki: [
 		[0, 0, 0, 8 / 42, 4 / 42],
 		[2 / 42, 4 / 42, 8 / 42, 4 / 42, 2 / 42],
 		[1 / 42, 2 / 42, 4 / 42, 2 / 42, 1 / 42],
-	],
+	] as Kernel,
 	burkes: [
 		[0, 0, 0, 8 / 32, 4 / 32],
 		[2 / 32, 4 / 32, 8 / 32, 4 / 32, 2 / 32],
-	],
+	] as Kernel,
 	atkinson: [
 		[0, 0, 1 / 8, 1 / 8],
 		[1 / 8, 1 / 8, 1 / 8, 0],
 		[0, 1 / 8, 0, 0],
-	],
+	] as Kernel,
 	// see: https://hbfs.wordpress.com/2013/12/31/dithering/
 	pigeon: [
 		[0, 0, 0, 2 / 14, 1 / 14],
 		[0, 2 / 14, 2 / 14, 2 / 14, 0],
 		[1 / 14, 0, 1 / 14, 0, 1 / 14],
-	],
+	] as Kernel,
 	sierra: [
 		[0, 0, 0, 5 / 32, 3 / 32],
 		[2 / 32, 4 / 32, 5 / 32, 4 / 32, 2 / 32],
 		[0, 2 / 32, 3 / 32, 2 / 32, 0],
-	],
+	] as Kernel,
 	'sierra-two-row': [
 		[0, 0, 0, 4 / 16, 3 / 16],
 		[1 / 16, 2 / 16, 3 / 16, 2 / 16, 1 / 16],
-	],
+	] as Kernel,
 	'sierra-lite': [
 		[0, 0, 2 / 4],
 		[1 / 4, 1 / 4, 0],
-	],
+	] as Kernel,
 };

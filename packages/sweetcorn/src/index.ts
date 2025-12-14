@@ -1,12 +1,12 @@
 import type { Sharp } from 'sharp';
-import thresholdMaps from './threshold-maps.json';
+import thresholdMaps from './threshold-maps.json' with { type: 'json' };
 import diffusionKernels from './diffusion-kernels';
 import type { DitheringAlgorithm } from './types';
 
 export type { DitheringAlgorithm };
 
 let sharp: typeof import('sharp');
-async function loadSharp() {
+async function loadSharp(): Promise<typeof import('sharp')> {
 	let sharpImport: typeof import('sharp');
 	try {
 		sharpImport = (await import('sharp')).default;
@@ -24,7 +24,10 @@ interface SweetcornOptions {
 	algorithm: DitheringAlgorithm;
 }
 
-export default async function sweetcorn(image: Sharp, { algorithm }: SweetcornOptions) {
+export default async function sweetcorn(
+	image: Sharp,
+	{ algorithm }: SweetcornOptions
+): Promise<Sharp> {
 	if (!sharp) sharp = await loadSharp();
 
 	// Convert image to greyscale before dithering.
@@ -69,7 +72,7 @@ export default async function sweetcorn(image: Sharp, { algorithm }: SweetcornOp
 function applyDiffusionKernel(
 	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
 	kernel: number[][]
-) {
+): void {
 	const kernelWidth = kernel[0]!.length;
 	const kernelHeight = kernel.length;
 	const kernelRadius = Math.floor((kernelWidth - 1) / 2);
@@ -108,7 +111,7 @@ function applyDiffusionKernel(
 	}
 }
 
-function clamp(value: number, min = 0, max = 255) {
+function clamp(value: number, min = 0, max = 255): number {
 	return Math.min(Math.max(value, min), max);
 }
 
@@ -116,7 +119,7 @@ function clamp(value: number, min = 0, max = 255) {
 function applyThresholdMap(
 	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
 	thresholdMap: number[][]
-) {
+): void {
 	const mapWidth = thresholdMap[0]!.length;
 	const mapHeight = thresholdMap.length;
 	for (let index = 0; index < rawPixels.data.length; index++) {
