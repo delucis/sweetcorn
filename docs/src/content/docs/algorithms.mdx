@@ -1,13 +1,15 @@
 ---
-title: Algorithms
+title: Dithering algorithms
 description: Examples of all the built-in dithering algorithms available in Sweetcorn
+sidebar:
+  label: Algorithms
 ---
 
 import { Image } from 'astro:assets';
 import demo from '../../assets/demo.png';
 import AlgorithmDemo from '../../components/AlgorithmDemo.astro';
 
-Sweetcorn supports two main types of dithering algorithms: threshold maps and error diffusion.
+Sweetcorn supports two main types of dithering algorithms: [threshold maps](#threshold-maps) and [error diffusion](#error-diffusion).
 
 This page includes examples of all the built-in dithering algorithms accompanied by a demonstration image dithered by the algorithm:
 
@@ -17,17 +19,32 @@ This page includes examples of all the built-in dithering algorithms accompanied
 
 Threshold maps apply a fixed pattern to the image to determine which pixels should be turned on or off.
 These algorithms are faster to compute than error diffusion algorithms.
-They can produce noticeable patterns in the output image.
+They can produce noticeable repeating patterns in the output image.
 
-### Available threshold map algorithms
+Sweetcorn provides the following threshold map algorithms:
 
 <AlgorithmDemo type="thresholdMap" />
 
 ## Error diffusion
 
 Error diffusion algorithms work by spreading the quantization error of a pixel to its neighboring pixels.
-This results in a more natural dithering effect, but it is more expensive, computing multiple values for each pixel of an image.
+This can result in a softer, less structured dithering effect, but it is more expensive, computing multiple values for each pixel of an image.
+Because of how errors are propagated, diffusion algorithms can also create artifacts in some images.
 
-### Available error diffusion algorithms
+Sweetcorn provides the following error diffusion algorithms:
 
 <AlgorithmDemo type="errorDiffusion" />
+
+## Which algorithm should I use?
+
+It’s up to you!
+
+Choose an algorithm you like visually.
+Often the best choice depends on your specific image and taste, but here are a few rules of thumb:
+
+- For speed, choose a threshold map algorithm.
+- `blue-noise` dithering is a good general-purpose choice.
+- The `bayer-8` and `bayer-16` algorithms dither using a recognisable retro pattern.
+- The `floyd-steinberg` algorithm is one of the most widely used error diffusion algorithms and is quite efficient.
+- The `atkinson` algorithm was first used on Apple computers in the 1980s, so also has a retro feel.
+- There are no wrong answers — have fun and choose one you like!
