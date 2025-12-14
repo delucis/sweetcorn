@@ -15,7 +15,7 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'Start Here',
+					label: 'Start here',
 					items: ['getting-started', 'algorithms'],
 				},
 				{ label: 'Frameworks', items: ['frameworks/astro'] },
