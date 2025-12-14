@@ -1,5 +1,5 @@
 import type { ImageOutputFormat, LocalImageService } from 'astro';
-import service, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
+import defaultSharpService, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
 import type { FitEnum } from 'sharp';
 import diffusionKernels from './diffusion-kernels';
@@ -48,7 +48,7 @@ export default {
 	propertiesToHash: ['src', 'width', 'height', 'format', 'quality', 'fit', 'position', 'dither'],
 
 	async getURL(options, imageConfig) {
-		let url = await service.getURL(options, imageConfig);
+		let url = await defaultSharpService.getURL(options, imageConfig);
 		if (options.dither) {
 			url += `&dither=${options.dither}`;
 		}
@@ -56,7 +56,7 @@ export default {
 	},
 
 	async validateOptions(options, imageConfig) {
-		const validatedOptions = await service.validateOptions!(options, imageConfig);
+		const validatedOptions = await defaultSharpService.validateOptions!(options, imageConfig);
 		if (imageConfig.service.config.defaultDitherAlgorithm) {
 			validatedOptions.dither ??= imageConfig.service.config.defaultDitherAlgorithm;
 		}
@@ -64,14 +64,14 @@ export default {
 	},
 
 	async parseURL(url, imageConfig) {
-		const parsed = (await service.parseURL(url, imageConfig))!;
+		const parsed = (await defaultSharpService.parseURL(url, imageConfig))!;
 		parsed.dither ??= url.searchParams.get('dither');
 		return parsed;
 	},
 
 	async transform(inputBuffer, transformOptions, config) {
 		const algorithm: DitheringAlgorithm = transformOptions.dither;
-		if (!algorithm) return service.transform(inputBuffer, transformOptions, config);
+		if (!algorithm) return defaultSharpService.transform(inputBuffer, transformOptions, config);
 
 		if (!sharp) sharp = await loadSharp();
 		const transform: BaseServiceTransform = transformOptions as BaseServiceTransform;
@@ -140,11 +140,11 @@ export default {
 	},
 
 	getHTMLAttributes(options, imageConfig) {
-		return service.getHTMLAttributes!(options, imageConfig);
+		return defaultSharpService.getHTMLAttributes!(options, imageConfig);
 	},
 
 	getSrcSet(options, imageConfig) {
-		return service.getSrcSet!(options, imageConfig);
+		return defaultSharpService.getSrcSet!(options, imageConfig);
 	},
 } satisfies LocalImageService<
 	SharpImageServiceConfig & { defaultDitherAlgorithm?: DitheringAlgorithm }
