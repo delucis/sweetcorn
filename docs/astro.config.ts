@@ -4,6 +4,8 @@ import { defineConfig } from 'astro/config';
 import starlightThemeFlexoki from 'starlight-theme-flexoki';
 
 export default defineConfig({
+	site: 'https://delucis.github.io',
+	base: '/sweetcorn',
 	integrations: [
 		sweetcorn(),
 		starlight({
