@@ -1,17 +1,17 @@
-# `astro-retro-image-service` 👾
+# `sweetcorn` 🌽
 
-A custom Astro image service to generate retro dithered images
+JavaScript image dithering tools for Sharp
 
-## Package
+## Packages
 
-If you are looking for the Astro integration package, you can find it in the [`packages/astro-retro-image-service/`](/packages/astro-retro-image-service/) directory.
+- [`sweetcorn`](/packages/sweetcorn/)
+- [`@sweetcorn/astro`](/packages/astro/)
 
 ## Project structure
 
-This project uses pnpm workspaces to develop a single Astro integration from the `packages/astro-retro-image-service/` directory. A Starlight documentation site is also available in the `docs/` directory that is also used for testing and demonstrating the integration.
+This project uses pnpm workspaces to develop its packages in the `packages/` directory.
+A Starlight documentation site is available in the `docs/` directory that is also used for testing and demonstrating the code.
 
 ## License
 
-Licensed under the MIT License, Copyright © delucis.
-
-See [LICENSE](/LICENSE) for more information.
+[MIT](LICENSE)

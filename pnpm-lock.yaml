@@ -13,12 +13,12 @@ importers:
       '@astrojs/starlight':
         specifier: ^0.37.1
         version: 0.37.1(astro@5.16.5(@types/node@25.0.1)(rollup@4.53.3)(typescript@5.9.3))
+      '@sweetcorn/astro':
+        specifier: workspace:*
+        version: link:../packages/astro
       astro:
         specifier: ^5.16.5
         version: 5.16.5(@types/node@25.0.1)(rollup@4.53.3)(typescript@5.9.3)
-      astro-retro-image-service:
-        specifier: workspace:*
-        version: link:../packages/astro-retro-image-service
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -29,11 +29,21 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(@astrojs/starlight@0.37.1(astro@5.16.5(@types/node@25.0.1)(rollup@4.53.3)(typescript@5.9.3)))
 
-  packages/astro-retro-image-service:
+  packages/astro:
+    dependencies:
+      sweetcorn:
+        specifier: workspace:^
+        version: link:../sweetcorn
     devDependencies:
       astro:
         specifier: ^5.16.5
         version: 5.16.5(@types/node@25.0.1)(rollup@4.53.3)(typescript@5.9.3)
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
+
+  packages/sweetcorn:
+    devDependencies:
       sharp:
         specifier: ^0.34.5
         version: 0.34.5

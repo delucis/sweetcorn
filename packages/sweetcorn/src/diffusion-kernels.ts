@@ -1,3 +1,32 @@
+/**
+ * Error diffusion dither kernels.
+ *
+ * Each kernel uses a 2D array to represent how the error from a pixel’s quantization should be
+ * distributed to neighbouring pixels. The central pixel in the first row is the current pixel,
+ * so its value is always 0, same for any preceding pixels as we process pixels from left to right
+ * and error should only be distributed to unvisited pixels.
+ *
+ * For example, the simplest kernel here distributes half the error to the pixel on the right, and
+ * half the error to the pixel directly below:
+ * ```
+ * ┌─────┬─────┐
+ * │  *  │ 0.5 │
+ * ├─────┼─────┤
+ * │ 0.5 │     │
+ * └─────┴─────┘
+ * ```
+ * In our code this is represented as:
+ * ```js
+ * [
+ *   [0, 0.5],
+ *   [0.5, 0],
+ * ]
+ * ```
+ *
+ * Each non-zero value in the kernel represents the fraction of the error to distribute to that
+ * pixel. The sum of all values in a kernel is usually ≤1.
+ *
+ */
 export default {
 	'simple-diffusion': [
 		[0, 0.5],

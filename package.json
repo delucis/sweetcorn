@@ -1,19 +1,17 @@
 {
-  "name": "astro-retro-image-service-monorepo",
+  "name": "sweetcorn-monorepo",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "A custom Astro image service to generate retro dithered images",
-  "author": "delucis",
   "type": "module",
   "engines": {
     "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
   },
   "packageManager": "pnpm@9.6.0",
   "private": true,
-  "homepage": "https://github.com/delucis/astro-retro-image-service",
+  "homepage": "https://github.com/delucis/sweetcorn",
   "repository": {
     "type": "git",
-    "url": "https://github.com/delucis/astro-retro-image-service.git"
+    "url": "https://github.com/delucis/sweetcorn.git"
   },
-  "bugs": "https://github.com/delucis/astro-retro-image-service/issues"
+  "bugs": "https://github.com/delucis/sweetcorn/issues"
 }

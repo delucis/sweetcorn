@@ -1,6 +1,6 @@
-# `astro-retro-image-service`
+# `sweetcorn` docs site
 
-A custom Astro image service to generate retro dithered images
+This folder contains the source code for the Sweetcorn documentation site built with [Starlight](https://starlight.astro.build/).
 
 ## Documentation
 
@@ -14,6 +14,4 @@ Content can be found in the [`src/content/docs/`](./src/content/docs/) directory
 
 ## License
 
-Licensed under the MIT License, Copyright © delucis.
-
-See [LICENSE](/LICENSE) for more information.
+[MIT](/LICENSE)

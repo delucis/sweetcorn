@@ -1,0 +1,35 @@
+{
+	"name": "sweetcorn",
+	"version": "0.0.1",
+	"license": "MIT",
+	"description": "JavaScript image dithering tools for Sharp",
+	"keywords": [
+		"image",
+		"dither",
+		"sharp",
+		"libvips"
+	],
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"devDependencies": {
+		"sharp": "^0.34.5"
+	},
+	"peerDependencies": {
+		"sharp": ">=0.33.0"
+	},
+	"engines": {
+		"node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"homepage": "https://github.com/delucis/sweetcorn",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/delucis/sweetcorn.git",
+		"directory": "packages/sweetcorn"
+	},
+	"bugs": "https://github.com/delucis/sweetcorn/issues"
+}

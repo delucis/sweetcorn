@@ -1,30 +1,31 @@
 import starlight from '@astrojs/starlight';
-import astroRetroImageService from 'astro-retro-image-service';
+import sweetcorn from '@sweetcorn/astro';
 import { defineConfig } from 'astro/config';
 import starlightThemeFlexoki from 'starlight-theme-flexoki';
 
 export default defineConfig({
 	integrations: [
-		astroRetroImageService(),
+		sweetcorn(),
 		starlight({
-			plugins: [starlightThemeFlexoki({ accentColor: 'orange' })],
+			plugins: [starlightThemeFlexoki({ accentColor: 'yellow' })],
 			editLink: {
-				baseUrl: 'https://github.com/delucis/astro-retro-image-service/edit/main/docs/',
+				baseUrl: 'https://github.com/delucis/sweetcorn/edit/main/docs/',
 			},
 			sidebar: [
 				{
 					label: 'Start Here',
-					items: ['getting-started', 'configuration'],
+					items: ['getting-started', 'algorithms'],
 				},
+				{ label: 'Frameworks', items: ['frameworks/astro'] },
 			],
 			social: [
 				{
-					href: 'https://github.com/delucis/astro-retro-image-service',
+					href: 'https://github.com/delucis/sweetcorn',
 					icon: 'github',
 					label: 'GitHub',
 				},
 			],
-			title: 'astro-retro-image-service',
+			title: 'sweetcorn',
 		}),
 	],
 });

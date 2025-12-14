@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import diffusionKernels from '../../../packages/sweetcorn/src/diffusion-kernels.ts';
+import thresholdMaps from '../../../packages/sweetcorn/src/threshold-maps.json';
+import demo from '../assets/demo.png';
+
+interface Props {
+	type: 'thresholdMap' | 'errorDiffusion';
+}
+
+const { type } = Astro.props;
+
+const algorithms = {
+	thresholdMap: ['threshold', ...Object.keys(thresholdMaps), 'white-noise'],
+	errorDiffusion: Object.keys(diffusionKernels),
+}[type];
+---
+
+<ul>
+	{
+		algorithms.map((algorithm) => (
+			<li>
+				<code>
+					<small>{algorithm}</small>
+				</code>
+				<Image src={demo} alt="" dither={algorithm} />
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		list-style: none;
+		padding: 0;
+
+		--min: 120px;
+		--gap: 1.5rem 0.5rem;
+		display: grid;
+		gap: var(--gap);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+
+		align-items: flex-end;
+	}
+
+	li {
+		margin: 0;
+		line-height: 1.2;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	code {
+		user-select: all;
+	}
+
+	img {
+		margin: 0;
+	}
+</style>

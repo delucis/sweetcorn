@@ -1,42 +1,39 @@
 ---
 title: Getting Started
+description: Learn how to use Sweetcorn to dither images in your JavaScript projects
 ---
 
-A custom Astro image service to generate retro dithered images.
-
-## Prerequisites
-
-You will need to have an Astro website set up.
-If you don't have one yet, you can follow the ["Install Astro"](https://docs.astro.build/en/install-and-setup/) guide in the Astro docs to create one.
-
-## Installation
-
-import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
 import { PackageManagers } from 'starlight-package-managers';
+
+Sweetcorn is a collection of JavaScript packages that dither images using [Sharp](https://sharp.pixelplumbing.com/).
+You can use it directly to process images, or via a framework integration.
+
+## Direct usage
 
 <Steps>
 
-1. `astro-retro-image-service` is an Astro [integration](https://docs.astro.build/en/guides/integrations-guide/). Install it by running the following command in your terminal:
+1. Install `sweetcorn` and `sharp`:
 
-   <PackageManagers type="exec" pkg="astro" args="add astro-retro-image-service" />
+   <PackageManagers type="add" pkg="sweetcorn sharp" />
 
-2. Apply dithering to your images using the `dither` prop on the `<Image>` component from `astro:assets`.
+2. Load an image with `sharp`, dither it with `sweetcorn`, and save the result:
 
-   ```astro /dither=.+/
-   ---
-   import { Image } from 'astro:assets';
-   import exampleImage from './example.jpg';
-   ---
+   ```js
+   import sharp from 'sharp';
+   import sweetcorn from 'sweetcorn';
 
-   <Image
-      src={exampleImage}
-      alt="Example Image"
-      dither="bayer-8"
-   />
+   const inputImage = await sharp('input.png');
+   const ditheredImage = await sweetcorn(inputImage, {
+   	algorithm: 'floyd-steinberg',
+   });
+   ditheredImage.webp({ lossless: true }).toFile('output.webp');
    ```
 
-   See the [“Algorithms”](/algorithms/) page for examples of all algorithms supported in the `dither` prop.
-
-3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to see the integration in action.
-
 </Steps>
+
+## Framework integrations
+
+Sweetcorn also provides integrations for popular web frameworks:
+
+- [Astro integration](/frameworks/astro/)

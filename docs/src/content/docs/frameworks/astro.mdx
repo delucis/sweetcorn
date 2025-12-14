@@ -1,0 +1,106 @@
+---
+title: Astro Image Service
+description: Learn how to dither images in your Astro websites using the Sweetcorn integration
+sidebar:
+  label: Astro
+---
+
+Sweetcorn provides an Astro integration that adds a custom [image service](https://docs.astro.build/en/reference/image-service-reference/) to generate dithered images.
+With the integration installed, you can easily apply dithering to any image that uses Astro’s `<Image>` and `<Picture>` components.
+
+## Prerequisites
+
+You will need to have an Astro website set up.
+If you don't have one yet, you can follow the ["Install Astro"](https://docs.astro.build/en/install-and-setup/) guide in the Astro docs to create one.
+
+## Quick start
+
+import { Steps } from '@astrojs/starlight/components';
+import { PackageManagers } from 'starlight-package-managers';
+
+<Steps>
+
+1. `sweetcorn` is an Astro [integration](https://docs.astro.build/en/guides/integrations-guide/). Install it by running the following command in your terminal:
+
+   <PackageManagers type="exec" pkg="astro" args="add @sweetcorn/astro" />
+
+2. Apply dithering to your images using the `dither` prop:
+
+   ```astro /dither="[^"]+"/
+   ---
+   import { Image } from 'astro:assets';
+   import exampleImage from './example.jpg';
+   ---
+
+   <Image dither="bayer-8" src={exampleImage} alt="Example" />
+   ```
+
+   See the [“Algorithms”](/algorithms/) page for examples of all algorithms supported in the `dither` prop.
+
+3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to see the integration in action.
+
+</Steps>
+
+## Usage
+
+### `<Image>` and `<Picture>`
+
+When using Astro’s [`<Image>`](https://docs.astro.build/en/guides/images/#image-) and [`<Picture>`](https://docs.astro.build/en/guides/images/#picture-) components, set the `dither` prop to one of the [supported algorithms](/algorithms/) to apply dithering to the image:
+
+```astro /dither="[^"]+"/
+---
+import { Image, Picture } from 'astro:assets';
+import example from './example.jpg';
+---
+
+<Image dither="atkinson" src={example} alt="Example" />
+
+<Picture dither="stucki" src={example} alt="Example" />
+```
+
+### `getImage()`
+
+When generating images programmatically with Astro’s [`getImage()`](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) API, set `dither` to one of the [supported algorithms](/algorithms/) in the options object:
+
+```js {6}
+import { getImage } from 'astro:assets';
+import example from './example.png';
+
+const ditheredImage = await getImage({
+	src: example,
+	dither: 'blue-noise',
+});
+```
+
+## Configuration
+
+The Sweetcorn integration can be configured by passing options in your Astro config file:
+
+```js {7-9}
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import sweetcorn from '@sweetcorn/astro';
+
+export default defineConfig({
+	integrations: [
+		sweetcorn({
+			// Configuration options here
+		}),
+	],
+});
+```
+
+The Sweetcorn integration supports the following configuration options.
+
+### `defaultDitherAlgorithm`
+
+import AlgorithmType from '../../../components/AlgorithmType.astro';
+
+**Type:** <AlgorithmType />
+
+By default, no dithering algorithm is applied to images unless a `dither` option is passed to the `<Image>` component or `getImage()` call.
+
+If you want to apply a dithering algorithm to images by default, you can set the `defaultDitherAlgorithm` to your preferred algorithm.
+This algorithm will be used whenever no specific `dither` option is provided.
+
+When using a default algorithm, you can opt out of dithering by setting `dither` to `false` in the `<Image>` component or `getImage()`.

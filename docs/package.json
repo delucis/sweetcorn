@@ -1,8 +1,7 @@
 {
-  "name": "astro-retro-image-service-docs",
+  "name": "sweetcorn-docs",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "A custom Astro image service to generate retro dithered images",
   "author": "delucis",
   "type": "module",
   "scripts": {
@@ -15,7 +14,7 @@
   "dependencies": {
     "@astrojs/starlight": "^0.37.1",
     "astro": "^5.16.5",
-    "astro-retro-image-service": "workspace:*",
+    "@sweetcorn/astro": "workspace:*",
     "sharp": "^0.34.5",
     "starlight-package-managers": "^0.11.1",
     "starlight-theme-flexoki": "^0.2.1"
@@ -24,11 +23,11 @@
     "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
   },
   "private": true,
-  "homepage": "https://github.com/delucis/astro-retro-image-service",
+  "homepage": "https://github.com/delucis/sweetcorn",
   "repository": {
     "type": "git",
-    "url": "https://github.com/delucis/astro-retro-image-service.git",
+    "url": "https://github.com/delucis/sweetcorn.git",
     "directory": "docs"
   },
-  "bugs": "https://github.com/delucis/astro-retro-image-service/issues"
+  "bugs": "https://github.com/delucis/sweetcorn/issues"
 }

@@ -1,6 +1,6 @@
 # Test images
 
-This folder contains test images used in the Astro Retro Image Service package for testing and demonstration purposes.
+This folder contains test images used for testing and demonstration purposes.
 
 - `9237597241_7bb0b5ff7b_o.jpg`: The Moon. August 25th 1890  
   License: © Tyne & Wear Archives & Museums  
@@ -13,6 +13,12 @@ This folder contains test images used in the Astro Retro Image Service package f
   Source: https://commons.wikimedia.org/wiki/File:CSF.UHD.png
 
   ![CSF.UHD](./CSF.UHD.png)
+
+- `demo`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A test image consisting of simple black and white gradients](./demo.png)
 
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  

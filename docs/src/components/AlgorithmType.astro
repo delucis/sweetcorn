@@ -1,0 +1,16 @@
+---
+import diffusionKernels from '../../../packages/sweetcorn/src/diffusion-kernels.ts';
+import thresholdMaps from '../../../packages/sweetcorn/src/threshold-maps.json';
+---
+
+<code
+	set:text={[
+		'threshold',
+		'white-noise',
+		...Object.keys(thresholdMaps),
+		...Object.keys(diffusionKernels),
+	]
+		.sort()
+		.map((algorithm) => JSON.stringify(algorithm))
+		.join(' | ')}
+/>

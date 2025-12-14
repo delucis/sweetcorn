@@ -1,0 +1,33 @@
+---
+title: Algorithms
+description: Examples of all the built-in dithering algorithms available in Sweetcorn
+---
+
+import { Image } from 'astro:assets';
+import demo from '../../assets/demo.png';
+import AlgorithmDemo from '../../components/AlgorithmDemo.astro';
+
+Sweetcorn supports two main types of dithering algorithms: threshold maps and error diffusion.
+
+This page includes examples of all the built-in dithering algorithms accompanied by a demonstration image dithered by the algorithm:
+
+<Image src={demo} alt="" dither={false} />
+
+## Threshold maps
+
+Threshold maps apply a fixed pattern to the image to determine which pixels should be turned on or off.
+These algorithms are faster to compute than error diffusion algorithms.
+They can produce noticeable patterns in the output image.
+
+### Available threshold map algorithms
+
+<AlgorithmDemo type="thresholdMap" />
+
+## Error diffusion
+
+Error diffusion algorithms work by spreading the quantization error of a pixel to its neighboring pixels.
+This results in a more natural dithering effect, but it is more expensive, computing multiple values for each pixel of an image.
+
+### Available error diffusion algorithms
+
+<AlgorithmDemo type="errorDiffusion" />

@@ -1,9 +1,9 @@
 ---
-title: astro-retro-image-service
-description: A custom Astro image service to generate retro dithered images
+title: sweetcorn
+description: JavaScript image dithering tools for Sharp
 head:
   - tag: title
-    content: astro-retro-image-service
+    content: sweetcorn 🌽 Turn smooth pixels into crunchy kernels
   - tag: style
     content: |
       .hero-html {
@@ -15,14 +15,35 @@ head:
 template: splash
 editUrl: false
 hero:
-  tagline: A custom Astro image service to generate retro dithered images
+  tagline: Turn smooth pixels into crunchy kernels
   image:
-    html: '👾'
+    html: '🌽'
   actions:
     - text: Get Started
       link: /getting-started/
       icon: right-arrow
 ---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Sweetcorn is a collection of JavaScript image dithering tools for [Sharp](https://sharp.pixelplumbing.com/).
+
+<CardGrid>
+	<Card title="30+ built-in algorithms" icon="setting">
+		Includes a range of threshold maps and error diffusion kernels, including classics like
+		Floyd-Steinberg, Atkinson, Bayer matrixes, and more.
+	</Card>
+	<Card title="Customizable" icon="pen">
+		Experiment with your own threshold maps and error diffusion kernels for creative effects.
+	</Card>
+	<Card title="Flexible pipeline" icon="puzzle">
+		Plugs into any Sharp-based image processing pipeline, allowing processing before and after the
+		dithering is applied.
+	</Card>
+	<Card title="Astro image service" icon="astro">
+		An Astro integration makes it easy to dither images in your Astro websites with sweetcorn.
+	</Card>
+</CardGrid>
 
 import { Image } from 'astro:assets';
 import moon from '../../assets/9237597241_7bb0b5ff7b_o.jpg';
@@ -32,8 +53,8 @@ import testPattern from '../../assets/PM5544_MK10.png';
 import ditherpunkDark from '../../assets/surma-ditherpunk-dark.png';
 import ditherpunkLight from '../../assets/surma-ditherpunk-light.png';
 
-import thresholdMaps from '../../../../packages/astro-retro-image-service/threshold-maps.json';
-import diffusionKernels from '../../../../packages/astro-retro-image-service/diffusion-kernels.ts';
+import diffusionKernels from '../../../../packages/sweetcorn/src/diffusion-kernels.ts';
+import thresholdMaps from '../../../../packages/sweetcorn/src/threshold-maps.json';
 
 <style set:html={`img { image-rendering: pixelated; }`}></style>
 
