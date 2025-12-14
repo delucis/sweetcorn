@@ -43,7 +43,6 @@ const fitMap: Record<ImageFit, keyof FitEnum> = {
 };
 
 export default {
-	...service,
 
 	async getURL(options, imageConfig) {
 		let url = await service.getURL(options, imageConfig);
@@ -136,7 +135,17 @@ export default {
 			format: info.format as ImageOutputFormat,
 		};
 	},
-} satisfies LocalImageService<SharpImageServiceConfig & { defaultDitherAlgorithm?: DitheringAlgorithm }>;
+
+	getHTMLAttributes(options, imageConfig) {
+		return service.getHTMLAttributes!(options, imageConfig);
+	},
+
+	getSrcSet(options, imageConfig) {
+		return service.getSrcSet!(options, imageConfig);
+	},
+} satisfies LocalImageService<
+	SharpImageServiceConfig & { defaultDitherAlgorithm?: DitheringAlgorithm }
+>;
 
 /**
  * Resizes the image using the same logic as Astro's built-in image service.
