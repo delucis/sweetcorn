@@ -21,13 +21,17 @@ async function loadSharp(): Promise<typeof import('sharp')> {
 }
 
 interface SweetcornOptions {
-	algorithm: DitheringAlgorithm;
+	algorithm?: DitheringAlgorithm | undefined;
+	thresholdMap?: number[][] | undefined;
+	diffusionKernel?: number[][] | undefined;
 }
 
 export default async function sweetcorn(
 	image: Sharp,
-	{ algorithm }: SweetcornOptions
+	options: SweetcornOptions
 ): Promise<Sharp> {
+	const { algorithm } = options;
+
 	if (!sharp) sharp = await loadSharp();
 
 	// Convert image to greyscale before dithering.
@@ -37,10 +41,10 @@ export default async function sweetcorn(
 	// Get raw pixel data for this image.
 	const rawPixels = await image.raw().toBuffer({ resolveWithObject: true });
 
-	const thresholdMap: number[][] | undefined =
+	const thresholdMap: number[][] | undefined = options.thresholdMap ||
 		thresholdMaps[algorithm as keyof typeof thresholdMaps];
 	const diffusionKernel: number[][] | undefined =
-		diffusionKernels[algorithm as keyof typeof diffusionKernels];
+		options.diffusionKernel || diffusionKernels[algorithm as keyof typeof diffusionKernels];
 
 	if (thresholdMap) {
 		applyThresholdMap(rawPixels, thresholdMap);
