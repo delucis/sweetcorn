@@ -104,3 +104,58 @@ If you want to apply a dithering algorithm to images by default, you can set the
 This algorithm will be used whenever no specific `dither` option is provided.
 
 When using a default algorithm, you can opt out of dithering by setting `dither` to `false` in the `<Image>` component or `getImage()`.
+
+## `customThresholdMaps`
+
+**Type:** `Record<string, number[][]>`
+
+You can provide your own custom threshold maps for dithering by passing them to the `customThresholdMaps` option.
+
+Each map should be a two-dimensional array of numbers representing the threshold values as 8-bit integers (0–255). All rows must be of the same length.
+
+```js
+sweetcorn({
+	customThresholdMaps: {
+		'custom-2x2-map': [
+			[0, 128],
+			[192, 64],
+		],
+	},
+}),
+```
+
+You can then use your custom threshold maps using the `dither` prop:
+
+```astro /dither="[^"]+"/
+<Image src={myImage} dither="custom-2x2-map" />
+```
+
+See [“Threshold map dithering”](/sweetcorn/guides/byo-algorithm/#threshold-map-dithering) for more details.
+
+## `customDiffusionKernels`
+
+**Type:** `Record<string, number[][]>`
+
+You can provide your own custom error diffusion kernels for dithering by passing them to the `customDiffusionKernels` option.
+
+Each kernel should be a two-dimensional array of numbers representing the diffusion weights. All rows must be of the same length.
+
+```js
+sweetcorn({
+	customDiffusionKernels: {
+		// Implements the Floyd-Steinberg kernel:
+		'custom-kernel': [
+			[0,    0,    7/16],
+			[3/16, 5/16, 1/16],
+		],
+	},
+}),
+```
+
+You can then use your custom diffusion kernels using the `dither` prop:
+
+```astro /dither="[^"]+"/
+<Image src={myImage} dither="custom-kernel" />
+```
+
+See [“Error diffusion dithering”](/sweetcorn/guides/byo-algorithm/#error-diffusion-dithering) for more details.
