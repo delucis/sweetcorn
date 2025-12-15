@@ -1,9 +1,9 @@
 import type { Sharp } from 'sharp';
-import thresholdMaps from './threshold-maps.json' with { type: 'json' };
+import thresholdMaps from './threshold-maps.json' with { type: 'json' };;
 import diffusionKernels from './diffusion-kernels';
-import type { DitheringAlgorithm } from './types';
+import type { SweetcornOptions } from './types';
 
-export type { DitheringAlgorithm };
+export type { DitheringAlgorithm } from './types';
 
 let sharp: typeof import('sharp');
 async function loadSharp(): Promise<typeof import('sharp')> {
@@ -20,16 +20,13 @@ async function loadSharp(): Promise<typeof import('sharp')> {
 	return sharpImport;
 }
 
-interface SweetcornOptions {
-	algorithm?: DitheringAlgorithm | undefined;
-	thresholdMap?: number[][] | undefined;
-	diffusionKernel?: number[][] | undefined;
-}
-
-export default async function sweetcorn(
-	image: Sharp,
-	options: SweetcornOptions
-): Promise<Sharp> {
+/**
+ * Create a dithered image — turn smooth pixels into crunchy kernels! 🌽
+ * @param image A Sharp image instance, e.g. created using `sharp('my-file.png')`.
+ * @param options Options configuring Sweetcorn.
+ * @returns A new Sharp image instance.
+ */
+export default async function sweetcorn(image: Sharp, options: SweetcornOptions): Promise<Sharp> {
 	const { algorithm } = options;
 
 	if (!sharp) sharp = await loadSharp();
@@ -41,8 +38,8 @@ export default async function sweetcorn(
 	// Get raw pixel data for this image.
 	const rawPixels = await image.raw().toBuffer({ resolveWithObject: true });
 
-	const thresholdMap: number[][] | undefined = options.thresholdMap ||
-		thresholdMaps[algorithm as keyof typeof thresholdMaps];
+	const thresholdMap: number[][] | undefined =
+		options.thresholdMap || thresholdMaps[algorithm as keyof typeof thresholdMaps];
 	const diffusionKernel: number[][] | undefined =
 		options.diffusionKernel || diffusionKernels[algorithm as keyof typeof diffusionKernels];
 
