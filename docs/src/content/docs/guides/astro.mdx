@@ -103,6 +103,12 @@ By default, no dithering algorithm is applied to images unless a `dither` option
 If you want to apply a dithering algorithm to images by default, you can set the `defaultDitherAlgorithm` to your preferred algorithm.
 This algorithm will be used whenever no specific `dither` option is provided.
 
+```js
+sweetcorn({
+	defaultDitherAlgorithm: 'atkinson',
+}),
+```
+
 When using a default algorithm, you can opt out of dithering by setting `dither` to `false` in the `<Image>` component or `getImage()`.
 
 ## `customThresholdMaps`
