@@ -1,0 +1,78 @@
+---
+title: Usage in Node.js
+description: Learn how to use Sweetcorn to dither images in your Node.js projects
+sidebar:
+  label: Node.js
+---
+
+import { PackageManagers } from 'starlight-package-managers';
+import pkg from '../../../../../packages/sweetcorn/package.json';
+
+## Prerequisites
+
+You will need to have [Node.js](https://nodejs.org/) {pkg.engines.node} installed.
+
+## Installation
+
+<PackageManagers type="add" pkg="sweetcorn" />
+
+If you don‘t have it installed already, you will also need to install [`sharp`](https://sharp.pixelplumbing.com/).
+
+## Usage
+
+Sweetcorn operates on a `Sharp` image instance.
+See the [Sharp documentation](https://sharp.pixelplumbing.com/api-constructor) for details on how to create and manipulate images with Sharp.
+
+In the following example, we load an image from the local filesystem using `sharp()`, then pass the image to `sweetcorn()` along with your desired options:
+
+```js
+import sharp from 'sharp';
+import sweetcorn from 'sweetcorn';
+
+// Load input.png from the local filesystem
+const input = await sharp('input.png');
+// Dither the image using the Stucki algorithm
+const dithered = await sweetcorn(input, { algorithm: 'stucki' });
+```
+
+You can then further process the dithered image `sweetcorn()` returns using any of Sharp’s methods.
+
+For example, you could save it as a lossless WebP file (an efficient format for dithered images):
+
+```js
+dithered.webp({ lossless: true }).toFile('output.webp');
+```
+
+Or return the image as a PNG buffer in response to a server request:
+
+```js
+const buffer = await dithered.png().toBuffer();
+return new Response(buffer);
+```
+
+See Sharp’s [“Output options”](https://sharp.pixelplumbing.com/api-output/) docs for more details about supported formats and options.
+
+## API
+
+### `sweetcorn(image, options)`
+
+**Import:** `import sweetcorn from 'sweetcorn'`  
+**Type:** `(image: Sharp, options: SweetcornOptions) => Promise<Sharp>`
+
+Takes a `Sharp` image instance and returns a new image dithered using the provided options object.
+
+One of the following options is required:
+
+- `algorithm`  
+  The name of a built-in dithering algorithm to use.
+  See the [“Algorithms”](/sweetcorn/algorithms/) page for the full list of supported algorithms.
+
+- `thresholdMap`  
+  **Type**: `number[][]`  
+  A custom threshold map to use for dithering.
+  See [“Threshold map dithering”](/sweetcorn/guides/byo-algorithm/#threshold-map-dithering) for more details.
+
+- `diffusionKernel`  
+  **Type**: `number[][]`  
+  A custom diffusion kernel to use for dithering.
+  See [“Error diffusion dithering”](/sweetcorn/guides/byo-algorithm/#error-diffusion-dithering) for details.

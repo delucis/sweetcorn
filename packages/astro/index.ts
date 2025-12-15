@@ -1,9 +1,9 @@
 import type { AstroIntegration } from 'astro';
-import type { DitheringAlgorithm } from 'sweetcorn';
+import type { SweetcornImageConfig } from './types';
 
-export default function sweetcornAstro({
-	defaultDitherAlgorithm,
-}: { defaultDitherAlgorithm?: DitheringAlgorithm } = {}) {
+export default function sweetcornAstro<T extends string = never, D extends string = never>(
+	config: SweetcornImageConfig<T, D> = {}
+) {
 	return {
 		name: '@sweetcorn/astro',
 		hooks: {
@@ -12,7 +12,7 @@ export default function sweetcornAstro({
 					image: {
 						service: {
 							entrypoint: '@sweetcorn/astro/service',
-							config: { defaultDitherAlgorithm },
+							config,
 						},
 					},
 					// TODO: Remove this once sweetcorn is bundled to JS (or use it only for local dev)

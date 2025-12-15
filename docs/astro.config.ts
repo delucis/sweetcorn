@@ -18,7 +18,10 @@ export default defineConfig({
 					label: 'Start here',
 					items: ['getting-started', 'algorithms'],
 				},
-				{ label: 'Frameworks', items: ['frameworks/astro'] },
+				{
+					label: 'Guides',
+					items: ['guides/node', 'guides/astro', 'guides/byo-algorithm'],
+				},
 				'acknowledgements',
 			],
 			social: [

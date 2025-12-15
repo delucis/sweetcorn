@@ -2,7 +2,8 @@ import type { ImageOutputFormat, LocalImageService } from 'astro';
 import defaultSharpService, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
 import type { FitEnum } from 'sharp';
-import sweetcorn, { type DitheringAlgorithm } from 'sweetcorn';
+import sweetcorn from 'sweetcorn';
+import type { SweetcornImageConfig } from './types';
 
 type ImageFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down' | (string & {});
 type BaseServiceTransform = {
@@ -79,7 +80,12 @@ export default {
 
 		const inputImage = await createImageLikeAstro(inputBuffer, config);
 		resizeImageLikeAstro(transform as BaseServiceTransform, inputImage);
-		const outputImage = await sweetcorn(inputImage, { algorithm: transform.dither });
+
+		const outputImage = await sweetcorn(inputImage, {
+			algorithm: transform.dither,
+			thresholdMap: config.service.config.customThresholdMaps?.[transform.dither],
+			diffusionKernel: config.service.config.customDiffusionKernels?.[transform.dither],
+		});
 
 		// Astro supports outputting different formats, but dithered images like this respond quite
 		// predictably to different compression methods. PNG and lossless WebP outperform lossy
@@ -106,9 +112,7 @@ export default {
 	getSrcSet(options, imageConfig) {
 		return defaultSharpService.getSrcSet!(options, imageConfig);
 	},
-} satisfies LocalImageService<
-	SharpImageServiceConfig & { defaultDitherAlgorithm?: DitheringAlgorithm }
->;
+} satisfies LocalImageService<SharpImageServiceConfig & SweetcornImageConfig<any, any>>;
 
 /**
  * Creates a new Sharp image instance using the same logic as Astro's built-in image service.
