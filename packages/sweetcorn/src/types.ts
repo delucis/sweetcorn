@@ -1,4 +1,4 @@
-import type diffusionKernels from './diffusion-kernels';
+import type diffusionKernels from './diffusion-kernels.js';
 import type thresholdMaps from './threshold-maps.json';
 
 export type DitheringAlgorithm =

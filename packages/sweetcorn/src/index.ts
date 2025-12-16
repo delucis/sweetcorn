@@ -1,10 +1,10 @@
 import type { Sharp } from 'sharp';
-import { applyDiffusionKernel, applyThresholdMap } from './processors';
-import diffusionKernels from './diffusion-kernels';
+import { applyDiffusionKernel, applyThresholdMap } from './processors.js';
+import diffusionKernels from './diffusion-kernels.js';
 import thresholdMaps from './threshold-maps.json' with { type: 'json' };
-import type { SweetcornOptions } from './types';
+import type { SweetcornOptions } from './types.js';
 
-export type { DitheringAlgorithm } from './types';
+export type { DitheringAlgorithm } from './types.js';
 
 let sharp: typeof import('sharp');
 async function loadSharp(): Promise<typeof import('sharp')> {
