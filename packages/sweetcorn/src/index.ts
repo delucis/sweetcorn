@@ -1,6 +1,7 @@
 import type { Sharp } from 'sharp';
-import thresholdMaps from './threshold-maps.json' with { type: 'json' };;
+import { applyDiffusionKernel, applyThresholdMap } from './processors';
 import diffusionKernels from './diffusion-kernels';
+import thresholdMaps from './threshold-maps.json' with { type: 'json' };
 import type { SweetcornOptions } from './types';
 
 export type { DitheringAlgorithm } from './types';
@@ -44,9 +45,14 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 		options.diffusionKernel || diffusionKernels[algorithm as keyof typeof diffusionKernels];
 
 	if (thresholdMap) {
-		applyThresholdMap(rawPixels, thresholdMap);
+		applyThresholdMap(rawPixels.data, rawPixels.info.width, thresholdMap);
 	} else if (diffusionKernel) {
-		applyDiffusionKernel(rawPixels, diffusionKernel);
+		applyDiffusionKernel(
+			rawPixels.data,
+			rawPixels.info.width,
+			rawPixels.info.height,
+			diffusionKernel
+		);
 	} else if (algorithm === 'white-noise') {
 		// White noise dithering (pretty rough and ugly)
 		for (let index = 0; index < rawPixels.data.length; index++) {
@@ -61,72 +67,7 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 		}
 	}
 
-	// Astro supports outputting different formats, but dithered images like this respond quite
-	// predictably to different compression methods. PNG and lossless WebP outperform lossy
-	// formats for this type of image, with lossless WebP producing slightly smaller images, so we
-	// use that here.
+	// Convert raw pixel data back into a Sharp image.
 	const outputImage = sharp(rawPixels.data, { raw: rawPixels.info });
-
 	return outputImage;
-}
-
-function applyDiffusionKernel(
-	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
-	kernel: number[][]
-): void {
-	const kernelWidth = kernel[0]!.length;
-	const kernelHeight = kernel.length;
-	const kernelRadius = Math.floor((kernelWidth - 1) / 2);
-
-	for (let index = 0; index < rawPixels.data.length; index++) {
-		const original = rawPixels.data[index]!;
-		const quantized = original < 128 ? 0 : 255;
-		rawPixels.data[index] = quantized;
-		const error = original - quantized;
-
-		const [x, y] = [index % rawPixels.info.width, Math.floor(index / rawPixels.info.width)];
-
-		const width = rawPixels.info.width;
-		const height = rawPixels.info.height;
-
-		for (let diffX = 0; diffX < kernelWidth; diffX++) {
-			for (let diffY = 0; diffY < kernelHeight; diffY++) {
-				const diffusionWeight = kernel[diffY]![diffX]!;
-				if (diffusionWeight === 0) continue;
-
-				const offsetX = diffX - kernelRadius;
-				const offsetY = diffY;
-
-				const neighborX = x + offsetX;
-				const neighborY = y + offsetY;
-
-				// Ensure we don't go out of bounds
-				if (neighborX >= 0 && neighborY >= 0 && neighborX < width && neighborY < height) {
-					const neighborIndex = neighborY * width + neighborX;
-					rawPixels.data[neighborIndex] = clamp(
-						rawPixels.data[neighborIndex]! + error * diffusionWeight
-					);
-				}
-			}
-		}
-	}
-}
-
-function clamp(value: number, min = 0, max = 255): number {
-	return Math.min(Math.max(value, min), max);
-}
-
-/** Applies a threshold map to the raw pixel data for ordered dithering. */
-function applyThresholdMap(
-	rawPixels: { data: Buffer<ArrayBufferLike>; info: import('sharp').OutputInfo },
-	thresholdMap: number[][]
-): void {
-	const mapWidth = thresholdMap[0]!.length;
-	const mapHeight = thresholdMap.length;
-	for (let index = 0; index < rawPixels.data.length; index++) {
-		const pixelValue = rawPixels.data[index]!;
-		const [x, y] = [index % rawPixels.info.width, Math.floor(index / rawPixels.info.width)];
-		const threshold = thresholdMap[y % mapHeight]![x % mapWidth]!;
-		rawPixels.data[index] = pixelValue < threshold ? 0 : 255;
-	}
 }
