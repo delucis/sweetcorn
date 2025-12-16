@@ -18,9 +18,11 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"prepublishOnly": "pnpm build"
+		"prepublishOnly": "pnpm build",
+		"test": "node --test"
 	},
 	"devDependencies": {
+		"@types/node": "^25.0.2",
 		"sharp": "^0.34.5",
 		"typescript": "^5.9.3"
 	},
