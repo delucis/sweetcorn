@@ -18,7 +18,9 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"prepublishOnly": "pnpm build"
+		"prepublishOnly": "pnpm build",
+		"pretest": "pnpm build",
+		"test": "node --test"
 	},
 	"devDependencies": {
 		"sharp": "^0.34.5",
