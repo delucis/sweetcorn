@@ -1,5 +1,3 @@
-/// <reference types="node" />
-
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import sharp from 'sharp';
