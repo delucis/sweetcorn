@@ -4,20 +4,10 @@ description: JavaScript image dithering tools for Sharp
 head:
   - tag: title
     content: sweetcorn 🌽 Turn smooth pixels into crunchy kernels
-  - tag: style
-    content: |
-      .hero-html {
-        --size: 12rem;
-        font-size: var(--size);
-        justify-content: center;
-        line-height: var(--size);
-      }
 template: splash
 editUrl: false
 hero:
   tagline: Turn smooth pixels into crunchy kernels
-  image:
-    html: '🌽'
   actions:
     - text: Get Started
       link: /sweetcorn/getting-started/
@@ -25,6 +15,9 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import Hero from '../../components/Hero.astro';
+
+<Hero />
 
 Sweetcorn is a collection of JavaScript image dithering tools for [Sharp](https://sharp.pixelplumbing.com/).
 
@@ -44,3 +37,4 @@ Sweetcorn is a collection of JavaScript image dithering tools for [Sharp](https:
 		An Astro integration makes it easy to dither images in your Astro websites with sweetcorn.
 	</Card>
 </CardGrid>
+

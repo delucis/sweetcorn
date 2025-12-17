@@ -43,3 +43,9 @@ This folder contains test images used for testing and demonstration purposes.
   Source: https://github.com/surma/surma.dev/blob/master/static/things/ditherpunk/light-original.png
 
   ![surma-ditherpunk-light](./surma-ditherpunk-light.png)
+
+- `VegCorn.jpg`:  
+  License: Public domain  
+  Source: https://commons.wikimedia.org/wiki/File:VegCorn.jpg
+
+  ![VegCorn.jpg](./VegCorn.jpg)

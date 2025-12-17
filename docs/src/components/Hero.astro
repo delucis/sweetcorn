@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import kernels2 from '../assets/VegCorn.jpg';
+---
+
+<div class="hero not-content">
+	{
+		(['bayer-16', 'threshold', 'atkinson'] as const).map((dither, index) => (
+			<div class="img-container">
+				<Image
+					src={kernels2}
+					alt="Dithered image of sweetcorn cobs"
+					height={200}
+					{dither}
+					loading={index === 0 ? 'eager' : 'lazy'}
+				/>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.hero {
+		width: 100%;
+		height: auto;
+		min-height: 400px;
+		aspect-ratio: 2.68 / 1;
+		overflow: clip;
+		display: grid;
+		grid-template: 1fr / 1fr;
+		place-content: center;
+	}
+	.img-container {
+		--frame-duration: 5s;
+		background-color: var(--sl-color-bg);
+		grid-area: 1 / 1 / 2 / 2;
+		opacity: 0;
+		animation: cycle calc(3 * var(--frame-duration)) linear 0s infinite;
+		animation-play-state: paused;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.img-container {
+			animation-play-state: running;
+		}
+	}
+	.img-container:nth-of-type(1) {
+		opacity: 1;
+	}
+	.img-container:nth-of-type(2) {
+		animation-delay: var(--frame-duration);
+	}
+	.img-container:nth-of-type(3) {
+		animation-delay: calc(2 * var(--frame-duration));
+	}
+	img {
+		mix-blend-mode: multiply;
+		image-rendering: pixelated;
+		width: calc(var(--sl-content-width) / 2);
+		max-width: unset;
+		height: 100%;
+		object-fit: cover;
+	}
+	@media (min-width: 560px) {
+		img {
+			width: calc(3 * var(--sl-content-width) / 4);
+		}
+	}
+	@media (min-width: 810px) {
+		img {
+			width: var(--sl-content-width);
+		}
+	}
+	:global([data-theme='dark']) img {
+		mix-blend-mode: screen;
+		filter: sepia(100%) saturate(500%);
+	}
+
+	@keyframes cycle {
+		15%,
+		33% {
+			opacity: 1;
+		}
+		53%,
+		100% {
+			opacity: 0;
+		}
+	}
+</style>
