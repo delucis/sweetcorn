@@ -10,8 +10,10 @@ declare namespace Astro {
 
 declare namespace Sweetcorn {
 	export interface Astro {
-		/** We don’t define this here to allow us to later set it during Astro’s type generation based
-		 * on a user’s provided custom algorithms. */
+		/**
+		 * We don’t define this here to allow us to later set it during Astro’s type generation based
+		 * on a user’s provided custom algorithms.
+		 */
 		// CustomAlgorithms: never;
 	}
 }
