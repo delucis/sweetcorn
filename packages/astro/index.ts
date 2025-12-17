@@ -1,3 +1,5 @@
+/// <reference types="./image-props.d.ts" />
+
 import type { AstroIntegration } from 'astro';
 import type { SweetcornImageConfig } from './types';
 
