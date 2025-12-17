@@ -1,0 +1,100 @@
+---
+title: Using dithered images on the web
+description: Tips and guidance for how to get the best results with dithered images on the modern web
+sidebar:
+  label: Dithering on the web
+---
+
+import { Image } from 'astro:assets';
+import demo from '../../assets/demo.png';
+
+A lot has changed since humanity first dithered an image.
+Early digital dithering was a way of working around the technical limitations of screens with limited colours.
+First, they had simple on/off pixels toggling from black to white or green.
+Later, they could maybe show 16 or even 256 colours!
+But that was still far too few for most images and dithering helped a lot.
+
+Today, screens can display millions of colours and high-resolution “retina” pixel densities are increasingly common.
+Ironically, these high quality screens actually require us to work _harder_ to make our anachronistic, pixel-poor, dithery dots look as good as they should.
+
+Here are some tips to help.
+
+## Make the most of `image-rendering`
+
+Use the CSS [`image-rendering`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/image-rendering) property to control how browsers scale your dithered images.
+
+### Scaling dithered images up
+
+By default, browsers will try to smooth out images when scaling them up.
+For common image content like photos this is usually desirable, but for dithered images it can ruin the effect.
+
+For example, here’s a 100px-wide image being displayed at 300px wide, which makes each individual pixel in the image look a bit smudged or blurred:
+
+<Image src={demo} alt="A large dithered test image where the pixel detail is blurred" dither="bayer-4" width={100} style="image-rendering: auto; width: 300px;" />
+
+Using the `pixelated` (or `crisp-edges`) image rendering algorithm will use nearest-neighbour scaling, preserving the sharp details of your dithered images:
+
+```css
+img {
+  image-rendering: pixelated;
+}
+```
+
+Here’s that same image as before.
+The only difference is the `image-rendering` property and now each individual pixel looks crisp and clear:
+  
+<Image src={demo} alt="A large dithered test image where the pixels are sharp" dither="bayer-4" width={100} style="image-rendering: pixelated; width: 300px;" />
+
+This is one of the super powers of dithered images!
+A regular image tends to look bad scaled up, but with the right CSS a small image file can have a big impact.
+
+### Scaling dithered images down
+
+While using `image-rendering: pixelated` is great for scaling dithered images up, it can cause undesirable results when scaling images down.
+
+Let’s flip our example from before.
+This time we’ll scale a 300px-wide image down to 85px, 100px, and 110px wide using `image-rendering: pixelated`.
+The middle image is a exactly 3x smaller than the original and looks OK, but because the other two images divide the original size by a fraction, we can see unpredictable moiré patterns interfering with the image:
+
+<p class="not-content">
+<span class="sr-only">Three images showing dithered images scaled down using image-rendering: pixelated. The leftmost and rightmost images feature unwanted moiré patterns.</span>
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: pixelated; width: 85px; height: auto;" />{' '}
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: pixelated; width: 100px; height: auto;" />{' '}
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: pixelated; width: 110px; height: auto;" />
+</p>
+
+In this case, we can improve the appearance by using the default CSS scaling algorithm instead:
+
+```css
+img {
+  image-rendering: auto;
+}
+```
+
+This produces a more predictable (although not always perfect) result across the different sizes:
+
+<p class="not-content">
+<span class="sr-only">Three images showing dithered images scaled down using image-rendering: auto. The moiré patterns are reduced.</span>
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: auto; width: 85px; height: auto;" />{' '}
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: auto; width: 100px; height: auto;" />{' '}
+<Image src={demo} alt="" dither="bayer-4" width={300} style="image-rendering: auto; width: 110px; height: auto;" />
+</p>
+
+## Small file sizes
+
+Beyond the visual aesthetic, one other advantage of dithered images is their relatively small file size.
+The actual results will vary by image and dithering algorithm, but here’s one comparison of the same 360px-wide image (scaled down to display side-by-side):
+
+| original | dithered |
+|----------|----------|
+| <Image src={demo} alt="A test image, showing smooth transitions between shades of grey" dither={false} width={360} style="image-rendering: auto; max-width: 180px;" /> | <Image src={demo} alt="The same image dithered, showing bands of shades of gray" dither="bayer-4" width={360} style="image-rendering: auto; max-width: 180px;" /> |
+| 6.58 kB | 1.62 kB | 
+
+In this case, even though the original image is an optimized WebP, the dithered image is still more than 4 times smaller than it.
+Combine this with the ability to [scale dithered images up](#scaling-dithered-images-up) with `image-rendering: pixelated` and you can deliver visually interesting images with a very small file size.
+
+Bandwidth-aware and eco-conscious websites have made us of dithered images because of their small size. For example, [LOW←TECH MAGAZINE’s solar-powered website](https://solar.lowtechmagazine.com/about/the-solar-website/#dithered-images) notes:
+
+> By dithering, we can make images ten times less resource-intensive, even though they are displayed much larger than on the old website.
+
+This is important because, according to the [HTTP Archive](https://httparchive.org/reports/state-of-images), the average web page in 2025 downloads around 1 MB of images.
