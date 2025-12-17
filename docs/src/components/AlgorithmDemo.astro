@@ -1,4 +1,5 @@
 ---
+import type { DitheringAlgorithm } from '@sweetcorn/astro';
 import { Image } from 'astro:assets';
 import diffusionKernels from '../../../packages/sweetcorn/src/diffusion-kernels.ts';
 import thresholdMaps from '../../../packages/sweetcorn/src/threshold-maps.json';
@@ -23,7 +24,7 @@ const algorithms = {
 				<code>
 					<small>{algorithm}</small>
 				</code>
-				<Image src={demo} alt="" dither={algorithm} />
+				<Image src={demo} alt="" dither={algorithm as DitheringAlgorithm} />
 			</li>
 		))
 	}
