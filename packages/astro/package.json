@@ -1,6 +1,6 @@
 {
 	"name": "@sweetcorn/astro",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"license": "MIT",
 	"description": "A custom Astro image service to generate dithered images using Sweetcorn",
 	"keywords": [

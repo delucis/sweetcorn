@@ -1,5 +1,24 @@
 # @sweetcorn/astro
 
+## 0.2.0
+
+### Minor Changes
+
+- [#6](https://github.com/delucis/sweetcorn/pull/6) [`2f25d3e`](https://github.com/delucis/sweetcorn/commit/2f25d3e32676b5907cdb5e2c4454c7bcc7d97b0c) Thanks [@delucis](https://github.com/delucis)! - Adds proper types for the `dither` prop in Astro’s image APIs. Requires Astro 5.16.6 or higher.
+
+- [#6](https://github.com/delucis/sweetcorn/pull/6) [`2f25d3e`](https://github.com/delucis/sweetcorn/commit/2f25d3e32676b5907cdb5e2c4454c7bcc7d97b0c) Thanks [@delucis](https://github.com/delucis)! - Exports a type to help with typing code that interfaces with the `dither` prop:
+
+  ```ts
+  import type { DitheringAlgorithm } from "@sweetcorn/astro";
+  ```
+
+- [`694d952`](https://github.com/delucis/sweetcorn/commit/694d9522dfb9162bf9e70771785405478fbc7375) Thanks [@delucis](https://github.com/delucis)! - Adds 11 new threshold map dithering patterns
+
+### Patch Changes
+
+- Updated dependencies [[`935d1fe`](https://github.com/delucis/sweetcorn/commit/935d1fec22e4e48dda033cf9fb5bfad93e2213f9), [`694d952`](https://github.com/delucis/sweetcorn/commit/694d9522dfb9162bf9e70771785405478fbc7375)]:
+  - sweetcorn@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
