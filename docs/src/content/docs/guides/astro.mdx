@@ -72,6 +72,29 @@ const ditheredImage = await getImage({
 });
 ```
 
+### Styling dithered images
+
+When using `<Image>` or `<Picture>`, dithered images are given classes to help target them in CSS.
+
+You can target all dithered images using the `sw-dithered` class in your CSS:
+
+```css
+.sw-dithered {
+	/* Styles for all dithered images */
+}
+```
+
+You can also target images dithered with a specific algorithm using the algorithm name, prefixed with `sw-`.
+
+For example, to target images dithered with the Atkinson or Floyd-Steinberg error diffusion algorithms:
+
+```css
+.sw-atkinson,
+.sw-floyd-steinberg {
+	/* Styles for images dithered with these algorithms */
+}
+```
+
 ## Configuration
 
 The Sweetcorn integration can be configured by passing options in your Astro config file:
@@ -196,5 +219,4 @@ const { algorithm, image } = Astro.props;
 	<Image src={image} alt="" dither={algorithm} />
 	<figcaption><slot /></figcaption>
 </figure>
-
 ```

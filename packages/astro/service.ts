@@ -105,8 +105,13 @@ export default {
 		};
 	},
 
-	getHTMLAttributes(options, imageConfig) {
-		return defaultSharpService.getHTMLAttributes!(options, imageConfig);
+	async getHTMLAttributes(options, imageConfig) {
+		const attributes = await defaultSharpService.getHTMLAttributes!(options, imageConfig);
+		if (options.dither) {
+			const classNames = [attributes.class, 'sw-dithered', `sw-${options.dither}`];
+			attributes.class = classNames.filter(Boolean).join(' ');
+		}
+		return attributes;
 	},
 
 	getSrcSet(options, imageConfig) {
