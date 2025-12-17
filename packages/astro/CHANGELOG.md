@@ -1,5 +1,17 @@
 # @sweetcorn/astro
 
+## 0.3.0
+
+### Minor Changes
+
+- [`2df50c1`](https://github.com/delucis/sweetcorn/commit/2df50c1022c51f44baab525a365a16d24bca54f4) Thanks [@delucis](https://github.com/delucis)! - Adds class names to dithered images to make them easier to target in CSS.
+
+  For example, an image dithered using the Floyd-Steinberg algorithm now has these class names:
+
+  ```html
+  <img class="sw-dithered sw-floyd-steinberg" ... />
+  ```
+
 ## 0.2.0
 
 ### Minor Changes
