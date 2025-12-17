@@ -165,3 +165,36 @@ You can then use your custom diffusion kernels using the `dither` prop:
 ```
 
 See [“Error diffusion dithering”](/sweetcorn/guides/byo-algorithm/#error-diffusion-dithering) for more details.
+
+## Types
+
+### `DitheringAlgorithm` type
+
+```ts
+import type { DitheringAlgorithm } from '@sweetcorn/astro';
+```
+
+The `DitheringAlgorithm` type represents all valid algorithms that can be passed to the `dither` prop in Astro’s image APIs.
+It can be helpful when typing a component that excepts a dither algorithm as a prop:
+
+```astro {3,8}
+---
+// src/components/DitheredFigure.astro
+import type { DitheringAlgorithm } from '@sweetcorn/astro';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+	algorithm: DitheringAlgorithm;
+	image: ImageMetadata;
+}
+
+const { algorithm, image } = Astro.props;
+---
+
+<figure>
+	<Image src={image} alt="" dither={algorithm} />
+	<figcaption><slot /></figcaption>
+</figure>
+
+```
