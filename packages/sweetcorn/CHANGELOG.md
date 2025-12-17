@@ -1,5 +1,11 @@
 # sweetcorn
 
+## 0.2.1
+
+### Patch Changes
+
+- [`d95bb70`](https://github.com/delucis/sweetcorn/commit/d95bb70e7724dbf29aadbd5a41dac65f8d1425e0) Thanks [@delucis](https://github.com/delucis)! - Fixes a mis-named algorithm
+
 ## 0.2.0
 
 ### Minor Changes
