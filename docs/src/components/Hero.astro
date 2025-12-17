@@ -9,7 +9,7 @@ import kernels2 from '../assets/VegCorn.jpg';
 			<div class="img-container">
 				<Image
 					src={kernels2}
-					alt="Dithered image of sweetcorn cobs"
+					alt={index === 0 ? 'Dithered image of sweetcorn cobs' : ''}
 					height={200}
 					{dither}
 					loading={index === 0 ? 'eager' : 'lazy'}
