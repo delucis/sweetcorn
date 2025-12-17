@@ -16,7 +16,7 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'Start here',
-					items: ['getting-started', 'algorithms'],
+					items: ['getting-started', 'algorithms', 'dithering-on-the-web'],
 				},
 				{
 					label: 'Guides',
