@@ -29,6 +29,8 @@ async function loadSharp(): Promise<typeof import('sharp')> {
  * @returns A new Sharp image instance.
  */
 export default async function sweetcorn(image: Sharp, options: SweetcornOptions): Promise<Sharp> {
+	// Clone the input image to avoid mutating it.
+	image = image.clone();
 	const { algorithm } = options;
 
 	if (!sharp) sharp = await loadSharp();
