@@ -1,8 +1,4 @@
-/** Any array-like structure indexed by numbers and with a `length`, e.g. an `Array` or `Buffer`. */
-interface ArrayOrBuffer<T> {
-	length: number;
-	[n: number]: T;
-}
+import { ArrayOrBuffer } from './types.js';
 
 /** Applies a threshold map to raw pixel data for ordered dithering. */
 export function applyThresholdMap(

@@ -45,3 +45,9 @@ export interface SweetcornOptions {
 	 */
 	diffusionKernel?: number[][] | undefined;
 }
+
+/** Any array-like structure indexed by numbers and with a `length`, e.g. an `Array` or `Buffer`. */
+export interface ArrayOrBuffer<T> {
+	length: number;
+	[n: number]: T;
+}

@@ -1,6 +1,7 @@
 import type { Sharp } from 'sharp';
-import { applyDiffusionKernel, applyThresholdMap } from './processors.js';
+import { customProcessors } from './custom-processors.js';
 import diffusionKernels from './diffusion-kernels.js';
+import { applyDiffusionKernel, applyThresholdMap } from './processors.js';
 import thresholdMaps from './threshold-maps.json' with { type: 'json' };
 import type { SweetcornOptions } from './types.js';
 
@@ -43,6 +44,7 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 		options.thresholdMap || thresholdMaps[algorithm as keyof typeof thresholdMaps];
 	const diffusionKernel: number[][] | undefined =
 		options.diffusionKernel || diffusionKernels[algorithm as keyof typeof diffusionKernels];
+	const customProcessor = customProcessors[algorithm as keyof typeof customProcessors];
 
 	if (thresholdMap) {
 		applyThresholdMap(rawPixels.data, rawPixels.info.width, thresholdMap);
@@ -53,18 +55,8 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 			rawPixels.info.height,
 			diffusionKernel
 		);
-	} else if (algorithm === 'white-noise') {
-		// White noise dithering (pretty rough and ugly)
-		for (let index = 0; index < rawPixels.data.length; index++) {
-			const pixelValue = rawPixels.data[index]!;
-			rawPixels.data[index] = pixelValue / 255 < Math.random() ? 0 : 255;
-		}
-	} else if (algorithm === 'threshold') {
-		// Basic quantization
-		for (let index = 0; index < rawPixels.data.length; index++) {
-			const pixelValue = rawPixels.data[index]!;
-			rawPixels.data[index] = pixelValue < 128 ? 0 : 255;
-		}
+	} else if (customProcessor) {
+		customProcessor(rawPixels.data);
 	}
 
 	// Convert raw pixel data back into a Sharp image.
