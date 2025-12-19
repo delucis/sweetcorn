@@ -38,7 +38,7 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 	image.gamma(2.2, 1).greyscale();
 
 	// Get raw pixel data for this image.
-	const rawPixels = await image.raw().toBuffer({ resolveWithObject: true });
+	const { data: pixels, info } = await image.raw().toBuffer({ resolveWithObject: true });
 
 	const thresholdMap: number[][] | undefined =
 		options.thresholdMap || thresholdMaps[algorithm as keyof typeof thresholdMaps];
@@ -47,19 +47,14 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 	const customProcessor = customProcessors[algorithm as keyof typeof customProcessors];
 
 	if (thresholdMap) {
-		applyThresholdMap(rawPixels.data, rawPixels.info.width, thresholdMap);
+		applyThresholdMap(pixels, info.width, thresholdMap);
 	} else if (diffusionKernel) {
-		applyDiffusionKernel(
-			rawPixels.data,
-			rawPixels.info.width,
-			rawPixels.info.height,
-			diffusionKernel
-		);
+		applyDiffusionKernel(pixels, info.width, info.height, diffusionKernel);
 	} else if (customProcessor) {
-		customProcessor(rawPixels.data);
+		customProcessor(pixels);
 	}
 
 	// Convert raw pixel data back into a Sharp image.
-	const outputImage = sharp(rawPixels.data, { raw: rawPixels.info });
+	const outputImage = sharp(pixels, { raw: info });
 	return outputImage;
 }
