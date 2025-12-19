@@ -1,5 +1,13 @@
 # sweetcorn
 
+## 0.2.2
+
+### Patch Changes
+
+- [`0d28099`](https://github.com/delucis/sweetcorn/commit/0d28099ba38a40d7d6c021a6e50a2da7df5570c3) Thanks [@delucis](https://github.com/delucis)! - Fixes `sweetcorn()` mutating input image while creating its output image
+
+- [`3614e3d`](https://github.com/delucis/sweetcorn/commit/3614e3d1973f0a6f717b23234444a4416731901b) Thanks [@delucis](https://github.com/delucis)! - Adds two new threshold maps: `horizontal-checkers-6` and `vertical-checkers-6`
+
 ## 0.2.1
 
 ### Patch Changes
