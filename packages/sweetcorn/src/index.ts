@@ -49,9 +49,9 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 	const customProcessor = customProcessors[algorithm as keyof typeof customProcessors];
 
 	if (thresholdMap) {
-		applyThresholdMap(pixels, info.width, thresholdMap);
+		applyThresholdMap(pixels, info, thresholdMap);
 	} else if (diffusionKernel) {
-		applyDiffusionKernel(pixels, info.width, info.height, diffusionKernel);
+		applyDiffusionKernel(pixels, info, diffusionKernel);
 	} else if (customProcessor) {
 		customProcessor(pixels);
 	}

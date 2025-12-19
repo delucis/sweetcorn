@@ -1,16 +1,23 @@
 import { ArrayOrBuffer } from './types.js';
 
+interface ImageInfo {
+	width: number;
+	height: number;
+	channels: number;
+}
+
 /** Applies a threshold map to raw pixel data for ordered dithering. */
 export function applyThresholdMap(
 	pixels: ArrayOrBuffer<number>,
-	width: number,
+	{ width, channels }: ImageInfo,
 	map: number[][]
 ): void {
 	const mapWidth = map[0]!.length;
 	const mapHeight = map.length;
 	for (let index = 0; index < pixels.length; index++) {
 		const pixelValue = pixels[index]!;
-		const [x, y] = [index % width, Math.floor(index / width)];
+		const channelIndex = Math.floor(index / channels);
+		const [x, y] = [channelIndex % width, Math.floor(channelIndex / width)];
 		const threshold = map[y % mapHeight]![x % mapWidth]!;
 		pixels[index] = pixelValue < threshold ? 0 : 255;
 	}
@@ -19,8 +26,7 @@ export function applyThresholdMap(
 /** Applies an error diffusion kernel to raw pixel data. */
 export function applyDiffusionKernel(
 	pixels: ArrayOrBuffer<number>,
-	width: number,
-	height: number,
+	{ width, height, channels }: ImageInfo,
 	kernel: number[][]
 ): void {
 	const kernelWidth = kernel[0]!.length;
@@ -34,7 +40,11 @@ export function applyDiffusionKernel(
 		const error = original - quantized;
 
 		// (x, y) co-ordinates of the current pixel in the image.
-		const [x, y] = [index % width, Math.floor(index / width)];
+		const [x, y] = [
+			Math.floor(index / channels) % width,
+			Math.floor(Math.floor(index / channels) / width),
+		];
+		const channel = index % channels;
 
 		// Distribute the error to neighbouring pixels based on the kernel.
 		for (let diffX = 0; diffX < kernelWidth; diffX++) {
@@ -47,7 +57,7 @@ export function applyDiffusionKernel(
 
 				// Ensure we don't go out of bounds
 				if (neighbourX >= 0 && neighbourY >= 0 && neighbourX < width && neighbourY < height) {
-					const neighbourIndex = neighbourY * width + neighbourX;
+					const neighbourIndex = neighbourY * width * channels + neighbourX * channels + channel;
 					pixels[neighbourIndex] = eightBitClamp(pixels[neighbourIndex]! + error * diffusionWeight);
 				}
 			}
