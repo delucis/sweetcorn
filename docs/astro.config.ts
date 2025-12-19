@@ -32,6 +32,22 @@ export default defineConfig({
 				},
 			],
 			title: 'sweetcorn',
+			head: [
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image',
+						content: 'https://delucis.github.io/sweetcorn/og.webp',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:alt',
+						content: 'sweetcorn: image dithering for Node.js',
+					},
+				},
+			],
 		}),
 	],
 });
