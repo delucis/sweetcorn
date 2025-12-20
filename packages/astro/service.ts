@@ -73,11 +73,6 @@ export default {
 			return defaultSharpService.transform(inputBuffer, transform, config);
 		}
 
-		// TODO: Currently, returning SVGs like Astro does, but we could potentially dither SVGs too.
-		// Return SVGs as-is
-		// TODO: Sharp has some support for SVGs, we could probably support this once Sharp is the default and only service.
-		if (transform.format === 'svg') return { data: inputBuffer, format: 'svg' };
-
 		const inputImage = await createImageLikeAstro(inputBuffer, config);
 		resizeImageLikeAstro(transform as BaseServiceTransform, inputImage);
 
