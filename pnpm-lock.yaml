@@ -36,8 +36,8 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(@astrojs/starlight@0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)))
       starlight-theme-flexoki:
-        specifier: ^0.2.1
-        version: 0.2.1(@astrojs/starlight@0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)))
+        specifier: ^0.2.2
+        version: 0.2.2(@astrojs/starlight@0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)))
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -2076,8 +2076,8 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
 
-  starlight-theme-flexoki@0.2.1:
-    resolution: {integrity: sha512-du3B8k6INoCcx3i7o+jO+CANKddzfZ6Iz41DFXP4m+hm/jjjVJrg4uEKG6hEtddL0GiB25Lq3XZGpYNskPUqsg==}
+  starlight-theme-flexoki@0.2.2:
+    resolution: {integrity: sha512-WIgWwRqK5m1fhzcKJ+dSQ31puY6NW8HoYvSLL3EOPp9QlNXaX2QxjiViR9nIpWUbo3rq+6HqY//WJid19F3QWQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       '@astrojs/starlight': '>=0.34'
@@ -5207,7 +5207,7 @@ snapshots:
     dependencies:
       '@astrojs/starlight': 0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))
 
-  starlight-theme-flexoki@0.2.1(@astrojs/starlight@0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))):
+  starlight-theme-flexoki@0.2.2(@astrojs/starlight@0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))):
     dependencies:
       '@astrojs/starlight': 0.37.1(astro@5.16.6(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))
 
