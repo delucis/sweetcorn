@@ -51,3 +51,10 @@ export interface ArrayOrBuffer<T> {
 	length: number;
 	[n: number]: T;
 }
+
+/** Information about an image’s dimensions and channels. Subset of Sharp’s `OutputInfo`. */
+export interface ImageInfo {
+	width: number;
+	height: number;
+	channels: number;
+}

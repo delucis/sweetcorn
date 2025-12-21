@@ -1,4 +1,4 @@
-import { ArrayOrBuffer } from './types.js';
+import type { ArrayOrBuffer, ImageInfo } from './types.js';
 
 /**
  * A collection of pixel mutation processors that deviate from the standardized threshold map and
@@ -6,15 +6,18 @@ import { ArrayOrBuffer } from './types.js';
  */
 export const customProcessors: Record<
 	'white-noise' | 'threshold',
-	(pixels: ArrayOrBuffer<number>) => void
+	(pixels: ArrayOrBuffer<number>, info: ImageInfo) => void
 > = {
 	/**
 	 * White noise dithering (pretty rough and ugly)
 	 */
-	'white-noise'(pixels) {
-		for (let index = 0; index < pixels.length; index++) {
-			const pixelValue = pixels[index]!;
-			pixels[index] = pixelValue / 255 < Math.random() ? 0 : 255;
+	'white-noise'(pixels, { channels }) {
+		for (let index = 0; index < pixels.length; index += channels) {
+			const threshold = Math.random();
+			for (let channel = 0; channel < channels; channel++) {
+				if (channel > 2) continue; // Skip alpha channel
+				pixels[index + channel] = pixels[index + channel] / 255 < threshold ? 0 : 255;
+			}
 		}
 	},
 

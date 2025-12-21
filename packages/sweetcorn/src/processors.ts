@@ -1,10 +1,4 @@
-import { ArrayOrBuffer } from './types.js';
-
-interface ImageInfo {
-	width: number;
-	height: number;
-	channels: number;
-}
+import { ArrayOrBuffer, ImageInfo } from './types.js';
 
 /** Applies a threshold map to raw pixel data for ordered dithering. */
 export function applyThresholdMap(
@@ -15,6 +9,8 @@ export function applyThresholdMap(
 	const mapWidth = map[0]!.length;
 	const mapHeight = map.length;
 	for (let index = 0; index < pixels.length; index++) {
+		const channel = index % channels;
+		if (channel == 3) continue; // Skip alpha channel
 		const pixelValue = pixels[index]!;
 		const channelIndex = Math.floor(index / channels);
 		const [x, y] = [channelIndex % width, Math.floor(channelIndex / width)];
@@ -34,6 +30,8 @@ export function applyDiffusionKernel(
 	const kernelRadius = Math.floor((kernelWidth - 1) / 2);
 
 	for (let index = 0; index < pixels.length; index++) {
+		const channel = index % channels;
+		if (channel == 3) continue; // Skip alpha channel
 		const original = pixels[index]!;
 		const quantized = original < 128 ? 0 : 255;
 		pixels[index] = quantized;
@@ -44,7 +42,6 @@ export function applyDiffusionKernel(
 			Math.floor(index / channels) % width,
 			Math.floor(Math.floor(index / channels) / width),
 		];
-		const channel = index % channels;
 
 		// Distribute the error to neighbouring pixels based on the kernel.
 		for (let diffX = 0; diffX < kernelWidth; diffX++) {
