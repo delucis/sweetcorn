@@ -1,5 +1,13 @@
 # @sweetcorn/astro
 
+## 0.4.0
+
+### Minor Changes
+
+- [`c553313`](https://github.com/delucis/sweetcorn/commit/c5533137968659c33a5def3e5f29fca2e034b5da) Thanks [@delucis](https://github.com/delucis)! - Adds support for dithering SVG input files
+
+  Sharp’s SVG rendering only supports a subset of SVG features, so if an SVG isn’t working well, remove the `dither` attribute.
+
 ## 0.3.0
 
 ### Minor Changes
