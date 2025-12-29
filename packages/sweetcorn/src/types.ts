@@ -44,6 +44,16 @@ export interface SweetcornOptions {
 	 * ]
 	 */
 	diffusionKernel?: number[][] | undefined;
+
+	/**
+	 * Dither as a three-channel RGB image instead of converting to a single-channel black-and-white image.
+	 */
+	preserveColour?: boolean | undefined;
+
+	/**
+	 * Preserve the alpha channel of the image, if it has one, instead of removing it.
+	 */
+	preserveAlpha?: boolean | undefined;
 }
 
 /** Any array-like structure indexed by numbers and with a `length`, e.g. an `Array` or `Buffer`. */
