@@ -3,7 +3,7 @@
 import type { AstroIntegration } from 'astro';
 import type { SweetcornImageConfig } from './types';
 
-export type DitheringAlgorithm = Exclude<Astro.CustomImageProps['dither'], false | undefined>;
+export type DitheringAlgorithm = Sweetcorn.Algorithm & {};
 
 export default function sweetcornAstro<T extends string = never, D extends string = never>(
 	config: SweetcornImageConfig<T, D> = {}
