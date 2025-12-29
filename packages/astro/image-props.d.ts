@@ -1,14 +1,18 @@
 declare namespace Astro {
 	interface CustomImageProps {
-		/** Dither this image with the specified algorithm. Set to `false` to disable dithering. */
+		/**
+		 * Dither this image with the specified algorithm. Set to `false` to disable dithering.
+		 * Or pass an object to configure more of Sweetcorn’s options.
+		 */
 		dither?:
 			| Sweetcorn.Algorithm
 			| false
-			| {
+			| ({
+					/**
+					 * The name of one of the dithering algorithm to use.
+					 */
 					algorithm: Sweetcorn.Algorithm;
-					preserveColour?: boolean | undefined;
-					preserveAlpha?: boolean | undefined;
-			  };
+			  } & Pick<import('sweetcorn').SweetcornOptions, 'preserveColour' | 'preserveAlpha'>);
 	}
 }
 
