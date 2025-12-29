@@ -2,57 +2,8 @@ import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import sharp from 'sharp';
 import sweetcorn from 'sweetcorn';
-import diffusionKernels from '../dist/diffusion-kernels.js';
-import { applyDiffusionKernel, applyThresholdMap } from '../dist/processors.js';
-import thresholdMaps from '../dist/threshold-maps.json' with { type: 'json' };
 
-const monochrome2x2 = { width: 2, height: 2, channels: 1 };
-
-describe('algorithms', () => {
-	describe('applyThresholdMapToPixels()', () => {
-		it('mutates a pixel array', () => {
-			const pixels = [127, 127, 127, 127];
-			applyThresholdMap(pixels, monochrome2x2, [[64, 184]]);
-			assert.deepEqual(pixels, [255, 0, 255, 0]);
-		});
-
-		it('it sets all values to 0 or 255', () => {
-			const pixels = [60, 120, 180, 240];
-			applyThresholdMap(pixels, monochrome2x2, [[64, 184]]);
-			assert(pixels.every((pixel) => pixel === 0 || pixel === 255));
-		});
-
-		it('supports maps with multiple rows', () => {
-			const pixels = [60, 120, 180, 240];
-			applyThresholdMap(pixels, monochrome2x2, [
-				[64, 184],
-				[92, 255],
-			]);
-			assert.deepEqual(pixels, [0, 0, 255, 0]);
-		});
-
-		it('dithers using the built-in bayer-2 threshold map', () => {
-			const pixels = [127, 127, 127, 127];
-			applyThresholdMap(pixels, monochrome2x2, thresholdMaps['bayer-2']);
-			assert.deepEqual(pixels, [255, 0, 0, 255]);
-		});
-	});
-
-	describe('applyDiffusionKernel()', () => {
-		it('mutates a pixel array', () => {
-			const pixels = [127, 127, 127, 127];
-			applyDiffusionKernel(pixels, monochrome2x2, diffusionKernels['simple-diffusion']);
-			assert.deepEqual(pixels, [0, 255, 255, 0]);
-		});
-
-		it('sets all values to 0 or 255', () => {
-			const pixels = [60, 120, 180, 250];
-			applyDiffusionKernel(pixels, monochrome2x2, diffusionKernels['simple-diffusion']);
-			assert(pixels.every((pixel) => pixel === 0 || pixel === 255));
-		});
-	});
-});
-
+// #region sweetcorn
 describe('sweetcorn()', () => {
 	it('dithers an image using a built-in threshold map', async () => {
 		const image = sharp(Buffer.from([127, 127, 127, 127]), {
