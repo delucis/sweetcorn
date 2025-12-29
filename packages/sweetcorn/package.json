@@ -20,7 +20,8 @@
 		"build": "tsc",
 		"prepublishOnly": "pnpm build",
 		"pretest": "pnpm build",
-		"test": "node --test"
+		"test": "node --test",
+		"test:update": "node --test --test-update-snapshots"
 	},
 	"devDependencies": {
 		"sharp": "^0.34.5",
