@@ -53,6 +53,7 @@ export default async function sweetcorn(image: Sharp, options: SweetcornOptions)
 
 	// Get raw pixel data for this image.
 	const { data: pixels, info } = await image.raw().toBuffer({ resolveWithObject: true });
+
 	const thresholdMap: number[][] | undefined =
 		options.thresholdMap || thresholdMaps[options.algorithm as keyof typeof thresholdMaps];
 	const diffusionKernel: number[][] | undefined =
