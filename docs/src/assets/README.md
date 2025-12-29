@@ -14,11 +14,17 @@ This folder contains test images used for testing and demonstration purposes.
 
   ![CSF.UHD](./CSF.UHD.png)
 
-- `demo`:  
+- `demo.png`:  
   License: MIT  
   Source: original image created for this repo
 
   ![A test image consisting of simple black and white gradients](./demo.png)
+
+- `demo-color2.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A colourful test image consisting of a linear gradient and a circle containing a radial gradient](./demo-color2.png)
 
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  
