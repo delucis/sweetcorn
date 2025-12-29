@@ -61,7 +61,7 @@ See Sharp’s [“Output options”](https://sharp.pixelplumbing.com/api-output/
 
 Takes a `Sharp` image instance and returns a new image dithered using the provided options object.
 
-One of the following options is required:
+The options object must include one of the following properties:
 
 - `algorithm`  
   The name of a built-in dithering algorithm to use.
@@ -76,3 +76,15 @@ One of the following options is required:
   **Type**: `number[][]`  
   A custom diffusion kernel to use for dithering.
   See [“Error diffusion dithering”](/sweetcorn/guides/byo-algorithm/#error-diffusion-dithering) for details.
+
+The following properties are optional:
+
+- `preserveColour`  
+  **Type**: `boolean`  
+  If set to `true`, Sweetcorn will dither the image in full colour instead of converting it to greyscale first.
+  Colour images will have larger file sizes than black-and-white images.
+
+- `preserveAlpha`  
+  **Type**: `boolean`  
+  If set to `true`, Sweetcorn will preserve the alpha channel of the input image.
+  Transparent areas of the image will remain transparent in the dithered output.

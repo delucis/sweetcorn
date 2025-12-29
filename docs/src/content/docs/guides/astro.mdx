@@ -58,6 +58,16 @@ import example from './example.jpg';
 <Picture dither="stucki" src={example} alt="Example" />
 ```
 
+You can also pass an object containing any of [Sweetcorn’s options](/sweetcorn/guides/node/#sweetcornimage-options) to the `dither` prop:
+
+```astro /dither={[^}]+}}/
+<Image
+	dither={{ algorithm: "sierra", preserveColour: true }}
+	src={example}
+	alt="Example"
+/>
+```
+
 ### `getImage()`
 
 When generating images programmatically with Astro’s [`getImage()`](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) API, set `dither` to one of the [supported algorithms](/sweetcorn/algorithms/) in the options object:
@@ -69,6 +79,18 @@ import example from './example.png';
 const ditheredImage = await getImage({
 	src: example,
 	dither: 'blue-noise',
+});
+```
+
+Or pass an object containing any of [Sweetcorn’s options](/sweetcorn/guides/node/#sweetcornimage-options) to the `dither` property:
+
+```js {3-6}
+const ditheredImage = await getImage({
+	src: example,
+	dither: {
+		algorithm: 'floyd-steinberg',
+		preserveColour: true,
+	},
 });
 ```
 
