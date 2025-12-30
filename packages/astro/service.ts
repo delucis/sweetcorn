@@ -51,12 +51,22 @@ export default {
 		if (options.dither) {
 			url += `&dither=${options.dither}`;
 		}
+		if (options.preserveColour) {
+			url += `&preserveColour`;
+		}
+		if (options.preserveAlpha) {
+			url += `&preserveAlpha`;
+		}
 		return url;
 	},
 
 	async validateOptions(options, imageConfig) {
 		const validatedOptions = await defaultSharpService.validateOptions!(options, imageConfig);
-		if (imageConfig.service.config.defaultDitherAlgorithm) {
+		if (validatedOptions.dither && typeof validatedOptions.dither === 'object') {
+			validatedOptions.preserveColour = Boolean(validatedOptions.dither.preserveColour);
+			validatedOptions.preserveAlpha = Boolean(validatedOptions.dither.preserveAlpha);
+			validatedOptions.dither = validatedOptions.dither.algorithm;
+		} else if (imageConfig.service.config.defaultDitherAlgorithm) {
 			validatedOptions.dither ??= imageConfig.service.config.defaultDitherAlgorithm;
 		}
 		return validatedOptions;
@@ -65,6 +75,8 @@ export default {
 	async parseURL(url, imageConfig) {
 		const parsed = (await defaultSharpService.parseURL(url, imageConfig))!;
 		parsed.dither ??= url.searchParams.get('dither');
+		parsed.preserveColour ??= url.searchParams.has('preserveColour');
+		parsed.preserveAlpha ??= url.searchParams.has('preserveAlpha');
 		return parsed;
 	},
 
@@ -80,6 +92,8 @@ export default {
 			algorithm: transform.dither,
 			thresholdMap: config.service.config.customThresholdMaps?.[transform.dither],
 			diffusionKernel: config.service.config.customDiffusionKernels?.[transform.dither],
+			preserveColour: transform.preserveColour,
+			preserveAlpha: transform.preserveAlpha,
 		});
 
 		// Astro supports outputting different formats, but dithered images like this respond quite

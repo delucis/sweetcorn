@@ -14,11 +14,35 @@ This folder contains test images used for testing and demonstration purposes.
 
   ![CSF.UHD](./CSF.UHD.png)
 
-- `demo`:  
+- `demo.png`:  
   License: MIT  
   Source: original image created for this repo
 
   ![A test image consisting of simple black and white gradients](./demo.png)
+
+- `demo-color.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A colourful test image consisting of a linear gradient and a circle containing a radial gradient](./demo-color.png)
+
+- `demo-color2.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A colourful test image consisting of a linear gradient and a circle containing a radial gradient](./demo-color2.png)
+
+- `transparency.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A stylized sweetcorn emoji with a transparent background](./transparency.png)
+
+- `test.svg`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A black and white gradient square with a circle cut out in the middle. In each corner is a small square in green, blue, magenta, and red respectively.](./test.svg)
 
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  
