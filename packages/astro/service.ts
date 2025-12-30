@@ -44,7 +44,18 @@ const fitMap: Record<ImageFit, keyof FitEnum> = {
 export default {
 	// Most of these are copied from Astro’s defaults.
 	// See: https://github.com/withastro/astro/blob/8cab2a4f7ee0cfbcf0ddaec0878da637e7854b9d/packages/astro/src/assets/consts.ts#L29-L37
-	propertiesToHash: ['src', 'width', 'height', 'format', 'quality', 'fit', 'position', 'dither'],
+	propertiesToHash: [
+		'src',
+		'width',
+		'height',
+		'format',
+		'quality',
+		'fit',
+		'position',
+		'dither',
+		'preserveColour',
+		'preserveAlpha',
+	],
 
 	async getURL(options, imageConfig) {
 		let url = await defaultSharpService.getURL(options, imageConfig);
