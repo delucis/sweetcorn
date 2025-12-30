@@ -26,6 +26,12 @@ This folder contains test images used for testing and demonstration purposes.
 
   ![A colourful test image consisting of a linear gradient and a circle containing a radial gradient](./demo-color2.png)
 
+- `transparency.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A stylized sweetcorn emoji with a transparent background](./transparency.png)
+
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  
   Source: https://it.wikipedia.org/wiki/File:Manifestazione_antifascista.jpg

@@ -142,6 +142,15 @@ describe('sweetcorn()', () => {
 			const dithered = await sweetcorn(image, { algorithm: 'dot-diagonal-16' });
 			await assertImageSnapshot(t, dithered);
 		});
+
+		it('dithers a PNG with transparency, preserving alpha', async (t) => {
+			const image = sharp(resolve('../../../docs/src/assets/transparency.png'));
+			const dithered = await sweetcorn(image, {
+				algorithm: 'floyd-steinberg',
+				preserveAlpha: true,
+			});
+			await assertImageSnapshot(t, dithered);
+		});
 	});
 });
 
