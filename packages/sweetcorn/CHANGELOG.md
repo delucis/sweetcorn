@@ -1,5 +1,17 @@
 # sweetcorn
 
+## 0.3.0
+
+### Minor Changes
+
+- [#11](https://github.com/delucis/sweetcorn/pull/11) [`5cd84a9`](https://github.com/delucis/sweetcorn/commit/5cd84a9b78439d3c6fd4125cc489d505c8534596) Thanks [@delucis](https://github.com/delucis)! - Adds support for colour dithering
+
+  Pass `preserveColour: true` to dither in RGB instead of converting to greyscale.
+
+- [#11](https://github.com/delucis/sweetcorn/pull/11) [`5cd84a9`](https://github.com/delucis/sweetcorn/commit/5cd84a9b78439d3c6fd4125cc489d505c8534596) Thanks [@delucis](https://github.com/delucis)! - Adds support for preserving transparency
+
+  Pass `preserveAlpha: true` to keep an input image’s alpha channel in Sweetcorn’s output image.
+
 ## 0.2.2
 
 ### Patch Changes
