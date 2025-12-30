@@ -20,6 +20,12 @@ This folder contains test images used for testing and demonstration purposes.
 
   ![A test image consisting of simple black and white gradients](./demo.png)
 
+- `demo-color.png`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A colourful test image consisting of a linear gradient and a circle containing a radial gradient](./demo-color.png)
+
 - `demo-color2.png`:  
   License: MIT  
   Source: original image created for this repo
