@@ -58,7 +58,7 @@ import example from './example.jpg';
 <Picture dither="stucki" src={example} alt="Example" />
 ```
 
-You can also pass an object containing any of [Sweetcorn’s options](/sweetcorn/guides/node/#sweetcornimage-options) to the `dither` prop:
+You can also pass an object to the `dither` prop to use [Sweetcorn’s `preserveColour` and `preserveAlpha` options](/sweetcorn/guides/node/#sweetcornimage-options):
 
 ```astro /dither={[^}]+}}/
 <Image
@@ -82,7 +82,7 @@ const ditheredImage = await getImage({
 });
 ```
 
-Or pass an object containing any of [Sweetcorn’s options](/sweetcorn/guides/node/#sweetcornimage-options) to the `dither` property:
+Or pass an object to the `dither` property to use [Sweetcorn’s `preserveColour` and `preserveAlpha` options](/sweetcorn/guides/node/#sweetcornimage-options):
 
 ```js {3-6}
 const ditheredImage = await getImage({
