@@ -42,7 +42,7 @@ This folder contains test images used for testing and demonstration purposes.
   License: MIT  
   Source: original image created for this repo
 
-  ![A black and white gradient square with a circle cut out in the middle and the text “Sweetcorn” overlaid in bright green and red](./test.svg)
+  ![A black and white gradient square with a circle cut out in the middle. In each corner is a small square in green, blue, magenta, and red respectively.](./test.svg)
 
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  
