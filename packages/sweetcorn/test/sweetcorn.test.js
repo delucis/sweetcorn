@@ -151,6 +151,16 @@ describe('sweetcorn()', () => {
 			});
 			await assertImageSnapshot(t, dithered);
 		});
+
+		it('dithers an SVG, preserving transparency and colour', async (t) => {
+			const image = sharp(resolve('../../../docs/src/assets/test.svg'));
+			const dithered = await sweetcorn(image, {
+				algorithm: 'sierra-lite',
+				preserveColour: true,
+				preserveAlpha: true,
+			});
+			await assertImageSnapshot(t, dithered);
+		});
 	});
 });
 

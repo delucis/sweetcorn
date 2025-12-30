@@ -32,6 +32,12 @@ This folder contains test images used for testing and demonstration purposes.
 
   ![A stylized sweetcorn emoji with a transparent background](./transparency.png)
 
+- `test.svg`:  
+  License: MIT  
+  Source: original image created for this repo
+
+  ![A black and white gradient square with a circle cut out in the middle and the text “Sweetcorn” overlaid in bright green and red](./test.svg)
+
 - `Manifestazione_antifascista.jpg`:  
   License: Public domain  
   Source: https://it.wikipedia.org/wiki/File:Manifestazione_antifascista.jpg
