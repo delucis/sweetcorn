@@ -1,5 +1,11 @@
 # @sweetcorn/astro
 
+## 0.4.1
+
+### Patch Changes
+
+- [#12](https://github.com/delucis/sweetcorn/pull/12) [`85c55ad`](https://github.com/delucis/sweetcorn/commit/85c55ad335b063cd0a72581ad9ab9218099d0930) Thanks [@delucis](https://github.com/delucis)! - Fixes use of `preserveColour` and `preserveAlpha` in static builds
+
 ## 0.4.0
 
 ### Minor Changes
