@@ -35,6 +35,14 @@ Sweetcorn provides the following error diffusion algorithms:
 
 <AlgorithmDemo type="errorDiffusion" />
 
+## More examples
+
+Choose an image file below and explore how it looks with different configurations:
+
+import AlgorithmGallery from '../../components/AlgorithmGallery/AlgorithmGallery.astro';
+
+<AlgorithmGallery />
+
 ## Which algorithm should I use?
 
 It’s up to you!
@@ -42,8 +50,8 @@ It’s up to you!
 Choose an algorithm you like visually.
 Often the best choice depends on your specific image and taste, but here are a few rules of thumb:
 
-- For speed, choose a threshold map algorithm.
-- `blue-noise` dithering is a good general-purpose choice.
+- For speed, choose a threshold map algorithm: they are both faster to compute and result in smaller file sizes.
+- `blue-noise` dithering is a good general-purpose choice, especially for photographic images.
 - The `bayer-8` and `bayer-16` algorithms dither using a recognisable retro pattern.
 - The `floyd-steinberg` algorithm is one of the most widely used error diffusion algorithms and is quite efficient.
 - The `atkinson` algorithm was first used on Apple computers in the 1980s, so also has a retro feel.
