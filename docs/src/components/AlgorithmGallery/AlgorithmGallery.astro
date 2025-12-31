@@ -1,0 +1,297 @@
+---
+import { galleryImages } from './images';
+
+const maxHeight = Math.max(
+	...galleryImages.map((image) => Math.max(...image.sources.map((source) => source.image.height)))
+);
+
+const initialImage = galleryImages[0];
+if (!initialImage) {
+	throw new Error('No images available for AlgorithmGallery component.');
+}
+
+declare global {
+	type ProcessedImage = (typeof galleryImages)[number];
+}
+---
+
+<algorithm-gallery data-images={JSON.stringify(galleryImages)} class="not-content">
+	<form data-gallery-controls>
+		<div>
+			<label for="image-select">
+				Image
+				<select name="image" id="image-select">
+					{galleryImages.map((image) => <option>{image.label}</option>)}
+				</select>
+			</label>
+		</div>
+
+		<div>
+			<label for="algorithm-select">
+				algorithm
+				<select name="algorithm" id="algorithm-select">
+					{
+						[...new Set(initialImage.sources.map(({ label }) => label))].map((label) => (
+							<option>{label}</option>
+						))
+					}
+				</select>
+			</label>
+			<label for="preserve-colour">
+				<input
+					type="checkbox"
+					name="preserve-colour"
+					id="preserve-colour"
+					disabled={initialImage.options.some((opt) => opt.preserveColour) ? false : true}
+					checked
+				/>
+				preserveColour
+			</label>
+			<label for="preserve-alpha">
+				<input
+					type="checkbox"
+					name="preserve-alpha"
+					id="preserve-alpha"
+					disabled={initialImage.options.some((opt) => opt.preserveAlpha) ? false : true}
+					checked
+				/>
+				preserveAlpha
+			</label>
+		</div>
+	</form>
+
+	<figure style={`height: max(60vh, ${maxHeight * 1.25}px);`}>
+		<form data-view-controls>
+			<fieldset>
+				<legend class="sr-only">Zoom</legend>
+				<label for="zoom-1x">
+					<input type="radio" name="zoom" id="zoom-1x" checked value="1" />
+					1×
+				</label>
+				<label for="zoom-2x">
+					<input type="radio" name="zoom" id="zoom-2x" value="2" />
+					2×
+				</label>
+				<label for="zoom-4x">
+					<input type="radio" name="zoom" id="zoom-4x" value="4" />
+					4×
+				</label>
+			</fieldset>
+		</form>
+		<img
+			src={initialImage.sources[0]?.image.src}
+			alt={initialImage.label}
+			width={initialImage.sources[0]?.image.width}
+			height={initialImage.sources[0]?.image.height}
+			loading="lazy"
+			decoding="async"
+		/>
+		<figcaption>
+			<a href={initialImage.captionLink} rel="noopener noreferrer">
+				{initialImage.caption}
+			</a>
+		</figcaption>
+	</figure>
+</algorithm-gallery>
+
+<script>
+	customElements.define(
+		'algorithm-gallery',
+		class extends HTMLElement {
+			images: ProcessedImage[];
+
+			constructor() {
+				super();
+				this.images = JSON.parse(this.dataset.images || '[]');
+			}
+
+			connectedCallback() {
+				const form = this.querySelector('form')!;
+				const imageSelect = form.image as HTMLSelectElement;
+				const algorithmSelect = form.algorithm as HTMLSelectElement;
+				const preserveColourCheckbox = form['preserve-colour'] as HTMLInputElement;
+				const preserveAlphaCheckbox = form['preserve-alpha'] as HTMLInputElement;
+				const imgElement = this.querySelector('img')!;
+				const figcaptionLink = this.querySelector<HTMLAnchorElement>('figcaption a')!;
+
+				const update = () => {
+					const selectedImage = this.images[imageSelect.selectedIndex];
+					if (!selectedImage) {
+						return;
+					}
+
+					// Update preserve colour checkbox.
+					const canPreserveColour = selectedImage.options.some((opt) => opt.preserveColour);
+					preserveColourCheckbox.disabled = !canPreserveColour;
+
+					// Update preserve alpha checkbox.
+					const canPreserveAlpha = selectedImage.options.some((opt) => opt.preserveAlpha);
+					preserveAlphaCheckbox.disabled = !canPreserveAlpha;
+
+					const selectedAlgorithms = selectedImage.sources.filter(
+						(source) => source.label === algorithmSelect.value
+					);
+
+					const selectedAlgorithm =
+						selectedAlgorithms.find(
+							(source) =>
+								source.label === algorithmSelect.value &&
+								(!preserveColourCheckbox.disabled && preserveColourCheckbox.checked
+									? source.options.preserveColour
+									: !source.options.preserveColour) &&
+								(!preserveAlphaCheckbox.disabled && preserveAlphaCheckbox.checked
+									? source.options.preserveAlpha
+									: !source.options.preserveAlpha)
+						) || selectedAlgorithms[0];
+
+					if (!selectedAlgorithm) {
+						return;
+					}
+
+					// Update displayed image.
+					imgElement.width = selectedAlgorithm.image.width;
+					imgElement.height = selectedAlgorithm.image.height;
+					imgElement.alt = selectedImage.label;
+					imgElement.src = selectedAlgorithm.image.src;
+
+					// Update caption
+					figcaptionLink.textContent = selectedImage.caption;
+					figcaptionLink.href = selectedImage.captionLink;
+				};
+
+				form.addEventListener('change', update);
+				update();
+			}
+		}
+	);
+</script>
+
+<style>
+	algorithm-gallery {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+
+		font-size: var(--sl-text-body-sm);
+	}
+
+	* {
+		corner-shape: superellipse(1.5);
+	}
+
+	[data-gallery-controls] {
+		&,
+		& > * {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem 1rem;
+		}
+	}
+
+	label {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+
+		touch-action: manipulation;
+		user-select: none;
+	}
+
+	label:has(:disabled) {
+		opacity: 0.65;
+	}
+
+	input[type='checkbox'] {
+		width: 1.25em;
+		height: 1.25em;
+	}
+
+	figure {
+		position: relative;
+		display: grid;
+		place-items: center;
+
+		border-radius: 1.5rem;
+		border: 2px solid var(--sl-color-hairline);
+		background: repeating-conic-gradient(var(--sl-color-gray-6) 0% 25%, transparent 0% 50%) 0 /
+			1.5rem 1.5rem;
+
+		overflow: clip;
+	}
+
+	figcaption {
+		position: absolute;
+		bottom: 0.5rem;
+		right: 0.5rem;
+		max-width: calc(100% - 1rem);
+
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 1em;
+		padding: 0.25em 0.75em;
+		background-color: var(--sl-color-gray-7, var(--sl-color-gray-6));
+
+		a {
+			text-underline-offset: 0.15rem;
+		}
+	}
+
+	img {
+		image-rendering: pixelated;
+	}
+
+	[data-view-controls] {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		z-index: 1;
+
+		fieldset {
+			border: none;
+			padding: 0;
+
+			display: flex;
+			flex-direction: column;
+		}
+
+		label {
+			border: 1px solid var(--sl-color-gray-5);
+			background-color: var(--sl-color-gray-7, var(--sl-color-gray-6));
+			padding: 0.25em 0.75em;
+			margin-top: -1px;
+
+			&:first-of-type {
+				margin-top: 0;
+				border-top-left-radius: 1em;
+				border-top-right-radius: 1em;
+			}
+			&:last-of-type {
+				border-bottom-left-radius: 1em;
+				border-bottom-right-radius: 1em;
+			}
+
+			&:has(:checked) {
+				background-color: var(--sl-color-black);
+				color: var(--sl-color-white);
+			}
+
+			&:has(:focus-visible) {
+				z-index: 1;
+				outline: 2px solid var(--sl-color-accent);
+				outline-offset: -2px;
+
+				input {
+					outline: none;
+				}
+			}
+		}
+	}
+
+	figure:has(input[value='2']:checked) img {
+		transform: scale(2);
+	}
+
+	figure:has(input[value='4']:checked) img {
+		transform: scale(4);
+	}
+</style>
