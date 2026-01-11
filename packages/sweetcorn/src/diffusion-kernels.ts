@@ -34,6 +34,8 @@ export default {
 		[0, 0.5],
 		[0.5, 0],
 	] as Kernel,
+	'row-diffusion': [[0, 1]] as Kernel,
+	'column-diffusion': [[0], [1]] as Kernel,
 	'floyd-steinberg': [
 		[0, 0, 7 / 16],
 		[3 / 16, 5 / 16, 1 / 16],
