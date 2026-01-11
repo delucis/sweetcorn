@@ -1,5 +1,12 @@
 # @sweetcorn/astro
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`cdaa7c5`](https://github.com/delucis/sweetcorn/commit/cdaa7c5f06a8ac78ccdbacdeffa8e37cb2e564e6)]:
+  - sweetcorn@0.4.0
+
 ## 0.4.1
 
 ### Patch Changes

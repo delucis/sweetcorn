@@ -1,5 +1,11 @@
 # sweetcorn
 
+## 0.4.0
+
+### Minor Changes
+
+- [`cdaa7c5`](https://github.com/delucis/sweetcorn/commit/cdaa7c5f06a8ac78ccdbacdeffa8e37cb2e564e6) Thanks [@delucis](https://github.com/delucis)! - Adds two new one-dimensional error diffusion kernels: `row-diffusion` and `column-diffusion`
+
 ## 0.3.0
 
 ### Minor Changes
