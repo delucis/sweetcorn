@@ -27,7 +27,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/astro
       astro:
-        specifier: ^5.16.15
+        specifier: ^5.16.16
         version: 5.17.1(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       sharp:
         specifier: ^0.34.5
@@ -49,7 +49,7 @@ importers:
         version: link:../sweetcorn
     devDependencies:
       astro:
-        specifier: ^5.16.15
+        specifier: ^5.16.16
         version: 5.17.1(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2)
       sharp:
         specifier: ^0.34.5
