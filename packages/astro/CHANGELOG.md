@@ -1,5 +1,11 @@
 # @sweetcorn/astro
 
+## 0.4.3
+
+### Patch Changes
+
+- [#46](https://github.com/delucis/sweetcorn/pull/46) [`0140f23`](https://github.com/delucis/sweetcorn/commit/0140f2362ff10d6e02a9833f52126b8aa9d81482) Thanks [@renovate](https://github.com/apps/renovate)! - Adds support for Astro 6
+
 ## 0.4.2
 
 ### Patch Changes
