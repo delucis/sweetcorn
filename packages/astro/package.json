@@ -19,11 +19,11 @@
 		"sweetcorn": "workspace:^"
 	},
 	"devDependencies": {
-		"astro": "^5.18.1",
+		"astro": "^6.0.3",
 		"sharp": "^0.34.5"
 	},
 	"peerDependencies": {
-		"astro": "^5.16.6",
+		"astro": "^5.16.6 || ^6.0.0",
 		"sharp": ">=0.33.0"
 	},
 	"publishConfig": {
