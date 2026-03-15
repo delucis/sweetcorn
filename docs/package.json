@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.6",
-		"@astrojs/starlight": "^0.37.6",
+		"@astrojs/starlight": "^0.38.0",
 		"@sweetcorn/astro": "workspace:*",
 		"astro": "^5.18.1",
 		"sharp": "^0.34.5",
