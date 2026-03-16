@@ -21,7 +21,7 @@ importers:
         specifier: ^0.9.7
         version: 0.9.7(prettier@3.7.4)(typescript@5.9.3)
       '@astrojs/starlight':
-        specifier: ^0.38.0
+        specifier: ^0.38.1
         version: 0.38.1(astro@6.0.4(@types/node@25.0.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))
       '@sweetcorn/astro':
         specifier: workspace:*
