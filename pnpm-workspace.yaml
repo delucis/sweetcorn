@@ -1,3 +1,10 @@
 packages:
   - 'docs'
   - 'packages/*'
+
+preferWorkspacePackages: true
+linkWorkspacePackages: true
+
+allowBuilds:
+  esbuild: false
+  sharp: false
