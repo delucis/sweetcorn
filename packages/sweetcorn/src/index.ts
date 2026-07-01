@@ -1,4 +1,4 @@
-import type { Sharp } from 'sharp';
+import type { Sharp, SharpConstructor } from 'sharp';
 import { customProcessors } from './custom-processors.js';
 import diffusionKernels from './diffusion-kernels.js';
 import { applyDiffusionKernel, applyThresholdMap } from './processors.js';
@@ -8,9 +8,9 @@ import type { SweetcornOptions } from './types.js';
 export type { DitheringAlgorithm } from './types.js';
 export type { SweetcornOptions };
 
-let sharp: (typeof import('sharp'))['default'];
-async function loadSharp(): Promise<(typeof import('sharp'))['default']> {
-	let sharpImport: (typeof import('sharp'))['default'];
+let sharp: SharpConstructor;
+async function loadSharp(): Promise<SharpConstructor> {
+	let sharpImport: SharpConstructor;
 	try {
 		sharpImport = (await import('sharp')).default;
 	} catch {
