@@ -8,9 +8,9 @@ import type { SweetcornOptions } from './types.js';
 export type { DitheringAlgorithm } from './types.js';
 export type { SweetcornOptions };
 
-let sharp: typeof import('sharp');
-async function loadSharp(): Promise<typeof import('sharp')> {
-	let sharpImport: typeof import('sharp');
+let sharp: (typeof import('sharp'))['default'];
+async function loadSharp(): Promise<(typeof import('sharp'))['default']> {
+	let sharpImport: (typeof import('sharp'))['default'];
 	try {
 		sharpImport = (await import('sharp')).default;
 	} catch {
