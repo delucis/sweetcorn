@@ -24,7 +24,7 @@
 		"test:update": "node --test --test-update-snapshots"
 	},
 	"devDependencies": {
-		"sharp": "^0.34.5",
+		"sharp": "^0.35.2",
 		"typescript": "^6.0.3"
 	},
 	"peerDependencies": {
