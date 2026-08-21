@@ -28,9 +28,8 @@ jobs:
       - name: Create release PR or publish release
         uses: changesets/action@198f833dd7d863100ea6e28967bc9a9fdefadb0a # v2.1.0
         with:
-          publish: pnpm changeset publish
-          commit: "[ci] release"
-          title: "[ci] release"
+          publish-script: pnpm changeset publish
+          commit-message: "[ci] release"
+          pr-title: "[ci] release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: "" # See https://github.com/changesets/changesets/issues/1152#issuecomment-3190884868
