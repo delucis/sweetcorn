@@ -20,4 +20,4 @@ Thank you to the following people, projects, and resources that made Sweetcorn p
 [dither-go]: https://github.com/makew0rld/dither
 [pigeon]: https://hbfs.wordpress.com/2013/12/31/dithering/
 [pixels]: https://www.boxentriq.com/code-breaking/pixel-values-extractor
-[dithertone]: https://www.doronsupply.com/dithertone-pro/
+[dithertone]: https://www.doronsupply.com/product/dithertone-pro/
