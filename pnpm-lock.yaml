@@ -36,8 +36,8 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(@astrojs/starlight@0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3))
       starlight-theme-flexoki:
-        specifier: ^0.2.3
-        version: 0.2.3(@astrojs/starlight@0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3))
+        specifier: ^0.3.0
+        version: 0.3.0(@astrojs/starlight@0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3))
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -1822,11 +1822,11 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
 
-  starlight-theme-flexoki@0.2.3:
-    resolution: {integrity: sha512-RrGwJxJvydWLqGDWeFO2eoGODMMffAVAzZ3SZNEo1WYBTEftGqLmrWLFc81S7JDUIINkvN2rlQRK3eg/exgpYA==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
+  starlight-theme-flexoki@0.3.0:
+    resolution: {integrity: sha512-r5hM0A5zFGe1OY2D1dxDEsCTp2L7Z1bV89uFgsNPLGhDYfFh6lREe7JVI5j5M/j5PZkEtEN4E9NO9CeUBPCrKw==}
+    engines: {node: '>=22.12.0'}
     peerDependencies:
-      '@astrojs/starlight': '>=0.34'
+      '@astrojs/starlight': '>=0.42'
 
   stream-replace-string@2.0.0:
     resolution: {integrity: sha512-TlnjJ1C0QrmxRNrON00JvaFFlNh5TTG00APw23j74ET7gkQpTASi6/L2fuiav8pzK715HXtUeClpBTw2NPSn6w==}
@@ -4119,7 +4119,7 @@ snapshots:
     dependencies:
       '@astrojs/starlight': 0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)
 
-  starlight-theme-flexoki@0.2.3(@astrojs/starlight@0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)):
+  starlight-theme-flexoki@0.3.0(@astrojs/starlight@0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
       '@astrojs/starlight': 0.42.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@25.0.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)
 
