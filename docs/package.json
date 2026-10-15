@@ -14,9 +14,9 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.10",
-		"@astrojs/starlight": "^0.42.4",
+		"@astrojs/starlight": "^0.42.6",
 		"@sweetcorn/astro": "workspace:*",
-		"astro": "^7.3.5",
+		"astro": "^7.3.8",
 		"sharp": "^0.35.5",
 		"starlight-package-managers": "^0.13.0",
 		"starlight-theme-flexoki": "^0.3.0",
