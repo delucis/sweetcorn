@@ -1,7 +1,7 @@
 import type { ImageOutputFormat, LocalImageService } from 'astro';
 import defaultSharpService, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
-import type { FitEnum } from 'sharp';
+import type { FitEnum, SharpConstructor } from 'sharp';
 import sweetcorn from 'sweetcorn';
 import type { SweetcornImageConfig } from './types';
 
@@ -16,9 +16,9 @@ type BaseServiceTransform = {
 	position?: string;
 };
 
-let sharp: typeof import('sharp');
+let sharp: SharpConstructor;
 async function loadSharp() {
-	let sharpImport: typeof import('sharp');
+	let sharpImport: SharpConstructor;
 	try {
 		sharpImport = (await import('sharp')).default;
 	} catch {
