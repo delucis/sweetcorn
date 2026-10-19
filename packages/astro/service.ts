@@ -1,7 +1,7 @@
 import type { ImageOutputFormat, LocalImageService } from 'astro';
 import defaultSharpService, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
-import type { FitEnum, SharpConstructor } from 'sharp';
+import type { FitEnum, KernelEnum, SharpConstructor } from 'sharp';
 import sweetcorn from 'sweetcorn';
 import type { SweetcornImageConfig } from './types';
 
@@ -103,7 +103,11 @@ export default {
 		}
 
 		const inputImage = await createImageLikeAstro(inputBuffer, config);
-		resizeImageLikeAstro(transform as BaseServiceTransform, inputImage);
+		resizeImageLikeAstro(
+			transform as BaseServiceTransform,
+			inputImage,
+			config.service.config.kernel,
+		);
 
 		const outputImage = await sweetcorn(inputImage, {
 			algorithm: transform.dither,
@@ -153,7 +157,7 @@ export default {
  */
 async function createImageLikeAstro(
 	inputBuffer: Uint8Array<ArrayBufferLike>,
-	config: Parameters<typeof defaultSharpService.transform>[2]
+	config: Parameters<typeof defaultSharpService.transform>[2],
 ) {
 	if (!sharp) sharp = await loadSharp();
 
@@ -171,34 +175,40 @@ async function createImageLikeAstro(
 
 /**
  * Resizes the image using the same logic as Astro's built-in image service.
- * @see https://github.com/withastro/astro/blob/8cab2a4f7ee0cfbcf0ddaec0878da637e7854b9d/packages/astro/src/assets/services/sharp.ts#L78-L98
+ * @see https://github.com/withastro/astro/blob/e990df87fb74b71a94b50fbc83a26a189391e300/packages/astro/src/assets/services/sharp.ts#L193-L218
  * @param transform Image service transform object
  * @param image Sharp image instance
+ * @param kernel The kernel to use for image reduction.
  */
-function resizeImageLikeAstro(transform: BaseServiceTransform, image: import('sharp').Sharp) {
-	// If `fit` isn't set then use old behavior:
-	// - Do not use both width and height for resizing, and prioritize width over height
-	// - Allow enlarging images
+function resizeImageLikeAstro(
+	transform: BaseServiceTransform,
+	image: import('sharp').Sharp,
+	kernel: keyof KernelEnum | undefined,
+) {
+	if (transform.width && transform.height) {
+		const fit: keyof FitEnum | undefined = transform.fit
+			? (fitMap[transform.fit] ?? 'inside')
+			: undefined;
 
-	const withoutEnlargement = Boolean(transform.fit);
-	if (transform.width && transform.height && transform.fit) {
-		const fit: keyof FitEnum = fitMap[transform.fit] ?? 'inside';
 		image.resize({
 			width: Math.round(transform.width),
 			height: Math.round(transform.height),
+			kernel,
 			fit,
 			position: transform.position,
-			withoutEnlargement,
+			withoutEnlargement: true,
 		});
 	} else if (transform.height && !transform.width) {
 		image.resize({
 			height: Math.round(transform.height),
-			withoutEnlargement,
+			withoutEnlargement: true,
+			kernel,
 		});
 	} else if (transform.width) {
 		image.resize({
 			width: Math.round(transform.width),
-			withoutEnlargement,
+			withoutEnlargement: true,
+			kernel,
 		});
 	}
 }
