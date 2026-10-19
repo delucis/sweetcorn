@@ -158,7 +158,7 @@ async function createImageLikeAstro(
 	if (!sharp) sharp = await loadSharp();
 
 	const image = sharp(inputBuffer, {
-		failOnError: false,
+		failOn: 'none',
 		pages: -1,
 		limitInputPixels: config.service.config.limitInputPixels,
 	});
