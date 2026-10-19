@@ -52,6 +52,8 @@ export default {
 		'quality',
 		'fit',
 		'position',
+		'background',
+		// These are added by sweetcorn
 		'dither',
 		'preserveColour',
 		'preserveAlpha',
