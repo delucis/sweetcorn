@@ -109,6 +109,13 @@ export default {
 			config.service.config.kernel,
 		);
 
+		// If background is set, flatten the image with the specified background.
+		// We do this after resize to ensure the background covers the entire image
+		// even if its size has expanded.
+		if (transform.background) {
+			inputImage.flatten({ background: transform.background });
+		}
+
 		const outputImage = await sweetcorn(inputImage, {
 			algorithm: transform.dither,
 			thresholdMap: config.service.config.customThresholdMaps?.[transform.dither],
