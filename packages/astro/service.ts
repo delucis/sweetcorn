@@ -57,8 +57,8 @@ export default {
 		'preserveAlpha',
 	],
 
-	async getURL(options, imageConfig) {
-		let url = await defaultSharpService.getURL(options, imageConfig);
+	async getURL(options, imageConfig, logger) {
+		let url = await defaultSharpService.getURL(options, imageConfig, logger);
 		if (options.dither) {
 			url += `&dither=${options.dither}`;
 		}
@@ -71,8 +71,12 @@ export default {
 		return url;
 	},
 
-	async validateOptions(options, imageConfig) {
-		const validatedOptions = await defaultSharpService.validateOptions!(options, imageConfig);
+	async validateOptions(options, imageConfig, logger) {
+		const validatedOptions = await defaultSharpService.validateOptions!(
+			options,
+			imageConfig,
+			logger,
+		);
 		if (validatedOptions.dither && typeof validatedOptions.dither === 'object') {
 			validatedOptions.preserveColour = Boolean(validatedOptions.dither.preserveColour);
 			validatedOptions.preserveAlpha = Boolean(validatedOptions.dither.preserveAlpha);
@@ -83,17 +87,17 @@ export default {
 		return validatedOptions;
 	},
 
-	async parseURL(url, imageConfig) {
-		const parsed = (await defaultSharpService.parseURL(url, imageConfig))!;
+	async parseURL(url, imageConfig, logger) {
+		const parsed = (await defaultSharpService.parseURL(url, imageConfig, logger))!;
 		parsed.dither ??= url.searchParams.get('dither');
 		parsed.preserveColour ??= url.searchParams.has('preserveColour');
 		parsed.preserveAlpha ??= url.searchParams.has('preserveAlpha');
 		return parsed;
 	},
 
-	async transform(inputBuffer, transform, config) {
+	async transform(inputBuffer, transform, config, logger) {
 		if (!transform.dither) {
-			return defaultSharpService.transform(inputBuffer, transform, config);
+			return defaultSharpService.transform(inputBuffer, transform, config, logger);
 		}
 
 		const inputImage = await createImageLikeAstro(inputBuffer, config);
@@ -125,8 +129,8 @@ export default {
 		};
 	},
 
-	async getHTMLAttributes(options, imageConfig) {
-		const attributes = await defaultSharpService.getHTMLAttributes!(options, imageConfig);
+	async getHTMLAttributes(options, imageConfig, logger) {
+		const attributes = await defaultSharpService.getHTMLAttributes!(options, imageConfig, logger);
 		if (options.dither) {
 			const classNames = [attributes.class, 'sw-dithered', `sw-${options.dither}`];
 			attributes.class = classNames.filter(Boolean).join(' ');
@@ -134,8 +138,8 @@ export default {
 		return attributes;
 	},
 
-	getSrcSet(options, imageConfig) {
-		return defaultSharpService.getSrcSet!(options, imageConfig);
+	getSrcSet(options, imageConfig, logger) {
+		return defaultSharpService.getSrcSet!(options, imageConfig, logger);
 	},
 } satisfies LocalImageService<SharpImageServiceConfig & SweetcornImageConfig<any, any>>;
 
