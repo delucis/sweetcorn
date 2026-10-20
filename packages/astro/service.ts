@@ -1,7 +1,7 @@
 import type { ImageOutputFormat, LocalImageService } from 'astro';
 import defaultSharpService, { type SharpImageServiceConfig } from 'astro/assets/services/sharp';
 import { AstroError } from 'astro/errors';
-import type { FitEnum } from 'sharp';
+import type { FitEnum, KernelEnum, SharpConstructor } from 'sharp';
 import sweetcorn from 'sweetcorn';
 import type { SweetcornImageConfig } from './types';
 
@@ -16,9 +16,9 @@ type BaseServiceTransform = {
 	position?: string;
 };
 
-let sharp: typeof import('sharp');
+let sharp: SharpConstructor;
 async function loadSharp() {
-	let sharpImport: typeof import('sharp');
+	let sharpImport: SharpConstructor;
 	try {
 		sharpImport = (await import('sharp')).default;
 	} catch {
@@ -52,13 +52,15 @@ export default {
 		'quality',
 		'fit',
 		'position',
+		'background',
+		// These are added by sweetcorn
 		'dither',
 		'preserveColour',
 		'preserveAlpha',
 	],
 
-	async getURL(options, imageConfig) {
-		let url = await defaultSharpService.getURL(options, imageConfig);
+	async getURL(options, imageConfig, logger) {
+		let url = await defaultSharpService.getURL(options, imageConfig, logger);
 		if (options.dither) {
 			url += `&dither=${options.dither}`;
 		}
@@ -71,8 +73,12 @@ export default {
 		return url;
 	},
 
-	async validateOptions(options, imageConfig) {
-		const validatedOptions = await defaultSharpService.validateOptions!(options, imageConfig);
+	async validateOptions(options, imageConfig, logger) {
+		const validatedOptions = await defaultSharpService.validateOptions!(
+			options,
+			imageConfig,
+			logger,
+		);
 		if (validatedOptions.dither && typeof validatedOptions.dither === 'object') {
 			validatedOptions.preserveColour = Boolean(validatedOptions.dither.preserveColour);
 			validatedOptions.preserveAlpha = Boolean(validatedOptions.dither.preserveAlpha);
@@ -83,21 +89,32 @@ export default {
 		return validatedOptions;
 	},
 
-	async parseURL(url, imageConfig) {
-		const parsed = (await defaultSharpService.parseURL(url, imageConfig))!;
+	async parseURL(url, imageConfig, logger) {
+		const parsed = (await defaultSharpService.parseURL(url, imageConfig, logger))!;
 		parsed.dither ??= url.searchParams.get('dither');
 		parsed.preserveColour ??= url.searchParams.has('preserveColour');
 		parsed.preserveAlpha ??= url.searchParams.has('preserveAlpha');
 		return parsed;
 	},
 
-	async transform(inputBuffer, transform, config) {
+	async transform(inputBuffer, transform, config, logger) {
 		if (!transform.dither) {
-			return defaultSharpService.transform(inputBuffer, transform, config);
+			return defaultSharpService.transform(inputBuffer, transform, config, logger);
 		}
 
 		const inputImage = await createImageLikeAstro(inputBuffer, config);
-		resizeImageLikeAstro(transform as BaseServiceTransform, inputImage);
+		resizeImageLikeAstro(
+			transform as BaseServiceTransform,
+			inputImage,
+			config.service.config.kernel,
+		);
+
+		// If background is set, flatten the image with the specified background.
+		// We do this after resize to ensure the background covers the entire image
+		// even if its size has expanded.
+		if (transform.background) {
+			inputImage.flatten({ background: transform.background });
+		}
 
 		const outputImage = await sweetcorn(inputImage, {
 			algorithm: transform.dither,
@@ -125,8 +142,8 @@ export default {
 		};
 	},
 
-	async getHTMLAttributes(options, imageConfig) {
-		const attributes = await defaultSharpService.getHTMLAttributes!(options, imageConfig);
+	async getHTMLAttributes(options, imageConfig, logger) {
+		const attributes = await defaultSharpService.getHTMLAttributes!(options, imageConfig, logger);
 		if (options.dither) {
 			const classNames = [attributes.class, 'sw-dithered', `sw-${options.dither}`];
 			attributes.class = classNames.filter(Boolean).join(' ');
@@ -134,25 +151,25 @@ export default {
 		return attributes;
 	},
 
-	getSrcSet(options, imageConfig) {
-		return defaultSharpService.getSrcSet!(options, imageConfig);
+	getSrcSet(options, imageConfig, logger) {
+		return defaultSharpService.getSrcSet!(options, imageConfig, logger);
 	},
 } satisfies LocalImageService<SharpImageServiceConfig & SweetcornImageConfig<any, any>>;
 
 /**
  * Creates a new Sharp image instance using the same logic as Astro's built-in image service.
- * @see https://github.com/withastro/astro/blob/8cab2a4f7ee0cfbcf0ddaec0878da637e7854b9d/packages/astro/src/assets/services/sharp.ts#L65-L72
+ * @see https://github.com/withastro/astro/blob/e990df87fb74b71a94b50fbc83a26a189391e300/packages/astro/src/assets/services/sharp.ts#L184-L191
  * @param inputBuffer Raw input image buffer
  * @param config Image service config
  */
 async function createImageLikeAstro(
 	inputBuffer: Uint8Array<ArrayBufferLike>,
-	config: Parameters<typeof defaultSharpService.transform>[2]
+	config: Parameters<typeof defaultSharpService.transform>[2],
 ) {
 	if (!sharp) sharp = await loadSharp();
 
 	const image = sharp(inputBuffer, {
-		failOnError: false,
+		failOn: 'none',
 		pages: -1,
 		limitInputPixels: config.service.config.limitInputPixels,
 	});
@@ -165,34 +182,40 @@ async function createImageLikeAstro(
 
 /**
  * Resizes the image using the same logic as Astro's built-in image service.
- * @see https://github.com/withastro/astro/blob/8cab2a4f7ee0cfbcf0ddaec0878da637e7854b9d/packages/astro/src/assets/services/sharp.ts#L78-L98
+ * @see https://github.com/withastro/astro/blob/e990df87fb74b71a94b50fbc83a26a189391e300/packages/astro/src/assets/services/sharp.ts#L193-L218
  * @param transform Image service transform object
  * @param image Sharp image instance
+ * @param kernel The kernel to use for image reduction.
  */
-function resizeImageLikeAstro(transform: BaseServiceTransform, image: import('sharp').Sharp) {
-	// If `fit` isn't set then use old behavior:
-	// - Do not use both width and height for resizing, and prioritize width over height
-	// - Allow enlarging images
+function resizeImageLikeAstro(
+	transform: BaseServiceTransform,
+	image: import('sharp').Sharp,
+	kernel: keyof KernelEnum | undefined,
+) {
+	if (transform.width && transform.height) {
+		const fit: keyof FitEnum | undefined = transform.fit
+			? (fitMap[transform.fit] ?? 'inside')
+			: undefined;
 
-	const withoutEnlargement = Boolean(transform.fit);
-	if (transform.width && transform.height && transform.fit) {
-		const fit: keyof FitEnum = fitMap[transform.fit] ?? 'inside';
 		image.resize({
 			width: Math.round(transform.width),
 			height: Math.round(transform.height),
+			kernel,
 			fit,
 			position: transform.position,
-			withoutEnlargement,
+			withoutEnlargement: true,
 		});
 	} else if (transform.height && !transform.width) {
 		image.resize({
 			height: Math.round(transform.height),
-			withoutEnlargement,
+			withoutEnlargement: true,
+			kernel,
 		});
 	} else if (transform.width) {
 		image.resize({
 			width: Math.round(transform.width),
-			withoutEnlargement,
+			withoutEnlargement: true,
+			kernel,
 		});
 	}
 }
