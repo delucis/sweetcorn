@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"license": "MIT",
 	"type": "module",
-	"packageManager": "pnpm@11.28.5",
+	"packageManager": "pnpm@12.14.0",
 	"private": true,
 	"scripts": {
 		"%docs": "pnpm --filter sweetcorn-docs",
