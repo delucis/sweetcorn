@@ -158,7 +158,7 @@ export default {
 
 /**
  * Creates a new Sharp image instance using the same logic as Astro's built-in image service.
- * @see https://github.com/withastro/astro/blob/8cab2a4f7ee0cfbcf0ddaec0878da637e7854b9d/packages/astro/src/assets/services/sharp.ts#L65-L72
+ * @see https://github.com/withastro/astro/blob/e990df87fb74b71a94b50fbc83a26a189391e300/packages/astro/src/assets/services/sharp.ts#L184-L191
  * @param inputBuffer Raw input image buffer
  * @param config Image service config
  */
