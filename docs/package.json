@@ -20,7 +20,7 @@
 		"sharp": "^0.35.5",
 		"starlight-package-managers": "^0.13.0",
 		"starlight-theme-flexoki": "^0.3.0",
-		"typescript": "^6.0.3"
+		"typescript": "^7.0.2"
 	},
 	"private": true
 }
